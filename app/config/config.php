@@ -1,5 +1,5 @@
 <?php
-define('BASEURL', 'http://localhost/PWL_STS_SAS_KELOMPOK1_XITKJ2/public');
+define('BASEURL', 'http://localhost/STS_Kel1/public');
 
 // DB Constants
 define('DB_HOST', 'localhost');
