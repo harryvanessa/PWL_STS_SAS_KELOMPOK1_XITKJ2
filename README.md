@@ -28,7 +28,18 @@ database.sql
 tapi db nya blum ada masi di gitgnore, abis tu run aja
 
 ```bash
+npm install
+```
+pas tu
+
+```bash
+npm run dev
+```
+bis tu
+
+dah gitu je
+
+```bash
 php -S localhost:8000 /public/index.php
 ```
-
 don
