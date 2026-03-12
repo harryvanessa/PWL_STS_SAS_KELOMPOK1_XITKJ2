@@ -1,6 +1,6 @@
 # STUDIA - Aplikasi Mentorship
 
-Saya cinta STUDIA, ucap kata orang yang cinta pelajarang sekolah
+Saya cinta STUDIA, ucap kata orang yang cinta pelajaran sekolah
 
 ## Collaborator KELOMPOK 1 TKJ 2
 - Charles Marselino
@@ -35,7 +35,7 @@ Saya cinta STUDIA, ucap kata orang yang cinta pelajarang sekolah
    - **Username:** `admin`
    - **Password:** `password`
 
-## 🛠️ Cara Kustomisasi Halaman Home (STUDIA Only)
+## Cara Kustomisasi Halaman Home (STUDIA Only)
 Kamu bisa mengubah teks, icon, warna, dan data lainnya di halaman home melalui file:
 `app/config/home_data.php`
 
