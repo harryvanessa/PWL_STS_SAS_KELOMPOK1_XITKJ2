@@ -2,7 +2,7 @@
 
 Saya cinta STUDIA, ucap kata orang yang cinta pelajarang sekolah
 
-## Collaborator
+## Collaborator KELOMPOK 1 TKJ 2
 - Charles Marselino
 - Harry Vannnesa
 - Selvin Agustino
