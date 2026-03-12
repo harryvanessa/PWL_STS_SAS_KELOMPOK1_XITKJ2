@@ -16,11 +16,18 @@ Saya cinta STUDIA, ucap kata orang yang cinta pelajaran sekolah
 3. Import file `database.sql` yang ada di root project ke dalam database `pwl_db`.
 
 ### 2. Konfigurasi Project
-1. Buka file `app/config/config.php`.
-2. Sesuaikan `BASEURL` dengan path project kamu. Contoh (Laragon):
-   ```php
-   define('BASEURL', 'http://localhost/PWL_STS_SAS_KELOMPOK1_XITKJ2/public');
-   ```
+1. Pertama ikutin ini dlu
+    ```bash
+    git clone https://github.com/harryvanessa/PWL_STS_SAS_KELOMPOK1_XITKJ2.git STS_Kel1
+    ```
+    setelah itu lansung
+    ```bash
+    cd STS_Kel1
+    ```
+    setelah itu
+    ```bash
+    php -S localhost:8000 -t public/
+    ```
 3. Pastikan konfigurasi database sudah benar:
    ```php
    define('DB_HOST', 'localhost');
