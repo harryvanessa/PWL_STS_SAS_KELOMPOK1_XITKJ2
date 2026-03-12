@@ -151,58 +151,29 @@
 <!-- STATS SECTION -->
 <div style="padding: 2rem 0; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border);">
     <div class="container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2rem; text-align: center;">
+        <?php foreach($data['home']['stats'] as $stat): ?>
         <div>
-            <p style="font-size: 2.5rem; font-weight: 800; color: var(--primary-color);">100+</p>
-            <p class="text-muted text-sm">Keterampilan Tersedia</p>
+            <p style="font-size: 2.5rem; font-weight: 800; color: <?= $stat['color']; ?>;"><?= $stat['value']; ?></p>
+            <p class="text-muted text-sm"><?= $stat['label']; ?></p>
         </div>
-        <div>
-            <p style="font-size: 2.5rem; font-weight: 800; color: var(--secondary-color);">50+</p>
-            <p class="text-muted text-sm">Mentor Berpengalaman</p>
-        </div>
-        <div>
-            <p style="font-size: 2.5rem; font-weight: 800; color: #f59e0b;">200+</p>
-            <p class="text-muted text-sm">Sesi Bimbingan Selesai</p>
-        </div>
-        <div>
-            <p style="font-size: 2.5rem; font-weight: 800; color: #ec4899);">98%</p>
-            <p class="text-muted text-sm">Siswa Puas</p>
-        </div>
+        <?php endforeach; ?>
     </div>
 </div>
 
 <!-- FEATURES SECTION -->
 <div class="container section">
-    <h2 class="section-title"><span class="gradient-text">Mengapa Mentorku?</span></h2>
+    <h2 class="section-title"><span class="gradient-text">Mengapa <?= $data['home']['brand']['name']; ?>?</span></h2>
     <p class="section-subtitle">Kami menggabungkan teknologi cerdas dengan keahlian manusia untuk pengalaman belajar yang tak tertandingi.</p>
     <div class="feature-grid">
+        <?php foreach($data['home']['features'] as $feature): ?>
         <div class="feature-card">
-            <div class="feature-icon" style="background: rgba(79,70,229,0.2); color: #818cf8;">
-                <i class="fa-solid fa-dice"></i>
+            <div class="feature-icon" style="background: <?= $feature['bg']; ?>; color: <?= $feature['color']; ?>;">
+                <i class="<?= $feature['icon']; ?>"></i>
             </div>
-            <h3 style="font-size: 1.2rem; margin-bottom: 0.75rem;">Gacha Mentor Cerdas</h3>
-            <p class="text-muted text-sm">Jawab kuesioner minat, sistem kami akan secara otomatis mencocokkan kamu dengan mentor terbaik di bidangnya.</p>
+            <h3 style="font-size: 1.2rem; margin-bottom: 0.75rem;"><?= $feature['title']; ?></h3>
+            <p class="text-muted text-sm"><?= $feature['desc']; ?></p>
         </div>
-        <div class="feature-card">
-            <div class="feature-icon" style="background: rgba(16,185,129,0.2); color: #34d399;">
-                <i class="fa-solid fa-calendar-check"></i>
-            </div>
-            <h3 style="font-size: 1.2rem; margin-bottom: 0.75rem;">Jadwal Fleksibel</h3>
-            <p class="text-muted text-sm">Pilih tanggal dan waktu yang cocok untukmu. Mentor mengkonfirmasi jadwal dan memberikan link meeting langsung di platform.</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon" style="background: rgba(245,158,11,0.2); color: #fbbf24;">
-                <i class="fa-solid fa-comments"></i>
-            </div>
-            <h3 style="font-size: 1.2rem; margin-bottom: 0.75rem;">Chat Real-time</h3>
-            <p class="text-muted text-sm">Diskusikan materi, kirim pertanyaan, dan berikan umpan balik langsung kepada mentor melalui fitur obrolan bawaan.</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon" style="background: rgba(236,72,153,0.2); color: #f472b6;">
-                <i class="fa-solid fa-shield-halved"></i>
-            </div>
-            <h3 style="font-size: 1.2rem; margin-bottom: 0.75rem;">Mentor Terverifikasi</h3>
-            <p class="text-muted text-sm">Setiap mentor melewati proses persetujuan oleh Admin sebelum bisa mengajar, memastikan kualitas bimbingan terjaga.</p>
-        </div>
+        <?php endforeach; ?>
     </div>
 </div>
 
@@ -212,26 +183,13 @@
     <h2 class="section-title">Bagaimana Cara Kerjanya?</h2>
     <p class="section-subtitle">Proses yang simpel dari awal hingga sesi bimbinganmu dimulai.</p>
     <div class="step-grid">
+        <?php foreach($data['home']['steps'] as $step): ?>
         <div class="step-card">
-            <div class="step-number">1</div>
-            <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Daftar & Isi Kuesioner</h3>
-            <p class="text-muted text-sm">Buat akun siswa dan jawab pertanyaan singkat tentang minat dan tujuan belajarmu.</p>
+            <div class="step-number" style="background: <?= $step['bg']; ?>;"><?= $step['num']; ?></div>
+            <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;"><?= $step['title']; ?></h3>
+            <p class="text-muted text-sm"><?= $step['desc']; ?></p>
         </div>
-        <div class="step-card">
-            <div class="step-number" style="background: var(--secondary-color);">2</div>
-            <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Pilih Keterampilan</h3>
-            <p class="text-muted text-sm">Sistem akan merekomendasikan keterampilan. Kamu bebas memilih sesuai rekomendasinya, atau memilih yang lain.</p>
-        </div>
-        <div class="step-card">
-            <div class="step-number" style="background: #f59e0b;">3</div>
-            <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Gacha Mentormu!</h3>
-            <p class="text-muted text-sm">Tekan tombol, dan sistem akan mencarikan 1 mentor yang spesialis di bidangmu secara otomatis.</p>
-        </div>
-        <div class="step-card">
-            <div class="step-number" style="background: #ec4899;">4</div>
-            <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Mulai Bimbingan</h3>
-            <p class="text-muted text-sm">Ajukan jadwal, mentor konfirmasi dengan link meeting, dan mulailah sesi bimbinganmu!</p>
-        </div>
+        <?php endforeach; ?>
     </div>
 </div>
 
@@ -239,29 +197,17 @@
 <hr class="divider">
 <div class="container section">
     <h2 class="section-title">Kata Mereka</h2>
-    <p class="section-subtitle">Cerita sukses dari pengguna platform Mentorku.</p>
+    <p class="section-subtitle">Cerita sukses dari pengguna platform <?= $data['home']['brand']['name']; ?>.</p>
     <div class="testimonial-grid">
+        <?php foreach($data['home']['testimonials'] as $testimonial): ?>
         <div class="testimonial-card">
-            <p class="text-sm" style="line-height: 1.7; margin-bottom: 1.25rem; color: #cbd5e1;">"Awalnya bingung mau belajar apa, tapi setelah mengisi kuesioner dan dapat rekomendasi Web Dev, saya langsung cocok sama mentor yang diberikan. Sesi pertama sangat membantu!"</p>
+            <p class="text-sm" style="line-height: 1.7; margin-bottom: 1.25rem; color: #cbd5e1;">"<?= $testimonial['text']; ?>"</p>
             <div style="display:flex; align-items: center; gap: 0.75rem;">
-                <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #4f46e5, #818cf8); display: flex; align-items: center; justify-content: center; font-weight: 700;">A</div>
-                <div><p style="font-weight: 600; font-size: 0.9rem; margin: 0;">Andi Pratama</p><p class="text-muted" style="font-size: 0.75rem; margin: 0;">Siswa — Web Development</p></div>
+                <div style="width: 40px; height: 40px; border-radius: 50%; background: <?= $testimonial['gradient']; ?>; display: flex; align-items: center; justify-content: center; font-weight: 700;"><?= $testimonial['initial']; ?></div>
+                <div><p style="font-weight: 600; font-size: 0.9rem; margin: 0;"><?= $testimonial['name']; ?></p><p class="text-muted" style="font-size: 0.75rem; margin: 0;"><?= $testimonial['role']; ?></p></div>
             </div>
         </div>
-        <div class="testimonial-card">
-            <p class="text-sm" style="line-height: 1.7; margin-bottom: 1.25rem; color: #cbd5e1;">"Fitur gacha mentornya unik banget! Saya dapat mentor yang super sabar dan profesional. Proses dari daftar sampai sesi pertama sangat mulus dan tidak ribet."</p>
-            <div style="display:flex; align-items: center; gap: 0.75rem;">
-                <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #10b981, #34d399); display: flex; align-items: center; justify-content: center; font-weight: 700;">S</div>
-                <div><p style="font-weight: 600; font-size: 0.9rem; margin: 0;">Siska Ayu</p><p class="text-muted" style="font-size: 0.75rem; margin: 0;">Siswa — Desain Grafis</p></div>
-            </div>
-        </div>
-        <div class="testimonial-card">
-            <p class="text-sm" style="line-height: 1.7; margin-bottom: 1.25rem; color: #cbd5e1;">"Sebagai mentor, platform ini memudahkan saya mengatur jadwal dengan murid. Link Zoom langsung bisa saya masukkan saat konfirmasi, sangat praktis dan profesional."</p>
-            <div style="display:flex; align-items: center; gap: 0.75rem;">
-                <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #f59e0b, #fbbf24); display: flex; align-items: center; justify-content: center; font-weight: 700;">B</div>
-                <div><p style="font-weight: 600; font-size: 0.9rem; margin: 0;">Budi Santoso</p><p class="text-muted" style="font-size: 0.75rem; margin: 0;">Mentor — Public Speaking</p></div>
-            </div>
-        </div>
+        <?php endforeach; ?>
     </div>
 </div>
 

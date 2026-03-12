@@ -16,8 +16,9 @@
 
 <nav class="navbar">
     <div class="container nav-content">
+        <?php $brand = $data['home']['brand'] ?? (require '../app/config/home_data.php')['brand']; ?>
         <a href="<?= BASEURL; ?>" class="brand-logo">
-            <i class="fa-solid fa-graduation-cap"></i> <span class="brand-text">Mentorku</span>
+            <i class="<?= $brand['logo']; ?>"></i> <span class="brand-text"><?= $brand['name']; ?></span>
         </a>
         <div class="nav-links">
             <?php if(isset($_SESSION['user'])): ?>

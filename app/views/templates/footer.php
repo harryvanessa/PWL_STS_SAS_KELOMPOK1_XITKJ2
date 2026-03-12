@@ -2,7 +2,8 @@
 
 <footer>
     <div class="container footer-content">
-        <p>&copy; <?= date('Y'); ?> Mentorku - Aplikasi Mentorship PWL. Desain premium dengan HTML & CSS Murni.</p>
+        <?php $brand = $data['home']['brand'] ?? (require '../app/config/home_data.php')['brand']; ?>
+        <p>&copy; <?= date('Y'); ?> <?= $brand['name']; ?> - Aplikasi Mentorship PWL. Desain premium dengan HTML & CSS Murni.</p>
     </div>
 </footer>
 

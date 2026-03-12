@@ -1,33 +1,43 @@
+# STUDIA - Aplikasi Mentorship
 
-# Project PWL
+Saya cinta STUDIA, ucap kata orang yang cinta pelajarang sekolah
 
-## Authors
-
+## Collaborator
 - Charles Marselino
-- Fernandez
+- Harry Vannnesa
 - Selvin Agustino
-- Harry Vannesa
+- Fernandez Carrick
 
-# Sementara btw cara runnya
+## Cara RUN Project
 
-```bash
-git clone https://github.com/harryvanessa/PWL_STS_SAS_KELOMPOK1_XITKJ2.git STS_Kel1
-```
+### 1. Persiapan Database
+1. Buka **phpMyAdmin**.
+2. Buat database baru dengan nama `pwl_db`.
+3. Import file `database.sql` yang ada di root project ke dalam database `pwl_db`.
 
-setelah itu
+### 2. Konfigurasi Project
+1. Buka file `app/config/config.php`.
+2. Sesuaikan `BASEURL` dengan path project kamu. Contoh (Laragon):
+   ```php
+   define('BASEURL', 'http://localhost/PWL_STS_SAS_KELOMPOK1_XITKJ2/public');
+   ```
+3. Pastikan konfigurasi database sudah benar:
+   ```php
+   define('DB_HOST', 'localhost');
+   define('DB_USER', 'root');
+   define('DB_PASS', '');
+   define('DB_NAME', 'pwl_db');
+   ```
 
-```bash
-cd STS_Kel1
-```
+### 3. Jalankan Aplikasi
+1. Buka browser dan akses URL `BASEURL` yang sudah kamu set tadi.
+2. Login Admin Default:
+   - **Username:** `admin`
+   - **Password:** `password`
 
-abis tu import db nya 
+## 🛠️ Cara Kustomisasi Halaman Home (STUDIA Only)
+Kamu bisa mengubah teks, icon, warna, dan data lainnya di halaman home melalui file:
+`app/config/home_data.php`
 
-```
-database.sql
-```
-tapi db nya blum ada masi di gitgnore, abis tu run aja
-
-```bash
-php -S localhost:8000 -t ./public/
-```
-don
+---
+*Di buat oleh kelompok 1*
