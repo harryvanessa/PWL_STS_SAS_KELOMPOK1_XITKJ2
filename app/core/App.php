@@ -36,8 +36,33 @@ class App {
 
     public function parseURL()
     {
+        $url = "";
         if( isset($_GET['url']) ) {
-            $url = rtrim($_GET['url'], '/');
+            $url = $_GET['url'];
+        } else {
+            // Fallback untuk PHP Built-in Server atau server tanpa .htaccess
+            $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+            $scriptName = $_SERVER['SCRIPT_NAME'];
+            
+            // Hapus nama script jika ada di URI (misal: /index.php/auth)
+            if (strpos($requestUri, $scriptName) === 0) {
+                $url = substr($requestUri, strlen($scriptName));
+            } else {
+                // Hapus path folder jika project ada di subfolder
+                $dir = str_replace('\\', '/', dirname($scriptName));
+                if ($dir !== '/' && $dir !== '.') {
+                    if (strpos($requestUri, $dir) === 0) {
+                        $url = substr($requestUri, strlen($dir));
+                    }
+                } else {
+                    $url = $requestUri;
+                }
+            }
+        }
+
+        if ($url) {
+            $url = ltrim($url, '/');
+            $url = rtrim($url, '/');
             $url = filter_var($url, FILTER_SANITIZE_URL);
             $url = explode('/', $url);
             return $url;

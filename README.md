@@ -26,9 +26,10 @@ Saya cinta STUDIA, ucap kata orang yang cinta pelajaran sekolah
     ```
     setelah itu
     ```bash
-    php -S localhost:8000 -t public/
+    # Cara paling simpel biar Clean URL jalan di PHP Built-in Server:
+    php -S localhost:8000 -t public public/index.php
     ```
-3. Pastikan konfigurasi database sudah benar:
+2. Pastikan konfigurasi database sudah benar:
    ```php
    define('DB_HOST', 'localhost');
    define('DB_USER', 'root');

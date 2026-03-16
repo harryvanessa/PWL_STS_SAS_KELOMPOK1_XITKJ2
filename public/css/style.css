@@ -126,6 +126,7 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
+    padding-top: 6rem; /* Ensures content is not hidden behind the fixed navbar */
 }
 
 /* Home Page / Hero Styles */
@@ -598,7 +599,23 @@ footer {
     }
 }
 
-/* --- UTILITIES --- */
+/* --- UTILITIES & LAYOUT (RESTORED) --- */
+.text-center { text-align: center; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-3 { margin-top: 1rem; }
+.mt-4 { margin-top: 1.5rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-3 { margin-bottom: 1rem; }
+.mb-4 { margin-bottom: 1.5rem; }
+
+.auth-container {
+    min-height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+
 .text-link {
     color: var(--primary-color);
     text-decoration: none;
@@ -646,4 +663,136 @@ tr:hover td {
 
 tr:last-child td {
     border-bottom: none;
+}
+
+/* --- DASHBOARD UI COMPONENTS (RESTORED) --- */
+
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 1.25rem;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-lg);
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: white;
+    letter-spacing: -0.02em;
+}
+
+/* Small Buttons for Tables/Actions */
+.btn-small {
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+    border-radius: 999px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-success {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399 !important;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.btn-success:hover {
+    background: rgba(16, 185, 129, 0.25);
+    transform: translateY(-1px);
+}
+
+.btn-danger {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171 !important;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.btn-danger:hover {
+    background: rgba(239, 68, 68, 0.25);
+    transform: translateY(-1px);
+}
+
+/* Badges */
+.badge {
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.badge-pending {
+    background: rgba(245, 158, 11, 0.15);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.badge-success {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.badge-primary {
+    background: rgba(79, 70, 229, 0.15);
+    color: #818cf8;
+    border: 1px solid rgba(79, 70, 229, 0.3);
+}
+
+/* Dashboard Forms */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #cbd5e1;
+}
+
+.form-control {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    border-radius: 0.875rem;
+    padding: 0.85rem 1.25rem;
+    color: white;
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+}
+
+select.form-control {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+}
+
+select.form-control option {
+    background: var(--surface-dark);
+    color: white;
 }
