@@ -2,7 +2,7 @@
     <div class="zenith-side-visual" style="background: #0f172a;">
         <div class="zenith-visual-content">
             <div class="zenith-logo">
-                <i class="fas fa-graduation-cap"></i>
+                <i class="fa-solid fa-graduation-cap"></i>
                 <span>MentorExpert</span>
             </div>
             <h1 class="zenith-hero-text">Bergabung Sebagi Mentor Ahli.</h1>
@@ -40,7 +40,7 @@
                 <div class="zenith-group">
                     <label>Nama Lengkap & Gelar</label>
                     <div class="zenith-input-wrapper">
-                        <i class="far fa-user-tie"></i>
+                        <i class="fa-solid fa-user-doctor"></i>
                         <input type="text" name="full_name" placeholder="Contoh: Dr. Budi Santoso, M.T." required autocomplete="off">
                     </div>
                 </div>
@@ -49,14 +49,14 @@
                     <div class="zenith-group">
                         <label>Username Login</label>
                         <div class="zenith-input-wrapper">
-                            <i class="far fa-at"></i>
+                            <i class="fa-solid fa-at"></i>
                             <input type="text" name="username" placeholder="user_id" required autocomplete="off">
                         </div>
                     </div>
                     <div class="zenith-group">
                         <label>Password</label>
                         <div class="zenith-input-wrapper">
-                            <i class="far fa-lock-alt"></i>
+                            <i class="fa-solid fa-lock"></i>
                             <input type="password" name="password" placeholder="Kata sandi" required>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                     <div class="zenith-group">
                         <label>Email Profesional</label>
                         <div class="zenith-input-wrapper">
-                            <i class="far fa-envelope"></i>
+                            <i class="fa-solid fa-envelope"></i>
                             <input type="email" name="email" placeholder="mentor@email.com" required>
                         </div>
                     </div>
@@ -100,7 +100,7 @@
 
                 <button type="submit" class="zenith-btn-primary">
                     Ajukan Pendaftaran Mentor
-                    <i class="fas fa-check-circle"></i>
+                    <i class="fa-solid fa-check-circle"></i>
                 </button>
 
                 <p class="zenith-footer-text">

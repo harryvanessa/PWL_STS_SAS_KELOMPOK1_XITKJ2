@@ -2,7 +2,7 @@
     <div class="zenith-side-visual" style="background: #0f172a;">
         <div class="zenith-visual-content">
             <div class="zenith-logo">
-                <i class="fas fa-graduation-cap"></i>
+                <i class="fa-solid fa-graduation-cap"></i>
                 <span>MentorExpert</span>
             </div>
             <h1 class="zenith-hero-text">Mulai Perjalanan Akademikmu Sekarang.</h1>
@@ -40,7 +40,7 @@
                 <div class="zenith-group">
                     <label>Nama Lengkap</label>
                     <div class="zenith-input-wrapper">
-                        <i class="far fa-id-card"></i>
+                        <i class="fa-solid fa-id-card"></i>
                         <input type="text" name="full_name" placeholder="Contoh: Budi Darmawan" required autocomplete="off">
                     </div>
                 </div>
@@ -49,14 +49,14 @@
                     <div class="zenith-group">
                         <label>Username</label>
                         <div class="zenith-input-wrapper">
-                            <i class="far fa-at"></i>
+                            <i class="fa-solid fa-at"></i>
                             <input type="text" name="username" placeholder="budidarma_99" required autocomplete="off">
                         </div>
                     </div>
                     <div class="zenith-group">
                         <label>Password</label>
                         <div class="zenith-input-wrapper">
-                            <i class="far fa-lock-alt"></i>
+                            <i class="fa-solid fa-lock"></i>
                             <input type="password" name="password" placeholder="Min 8 karakter" required>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                     <div class="zenith-group">
                         <label>Email Aktif</label>
                         <div class="zenith-input-wrapper">
-                            <i class="far fa-envelope"></i>
+                            <i class="fa-solid fa-envelope"></i>
                             <input type="email" name="email" placeholder="budi@email.com" required>
                         </div>
                     </div>
@@ -88,7 +88,7 @@
 
                 <button type="submit" class="zenith-btn-primary" style="background: var(--secondary-color);">
                     Daftar Sekarang
-                    <i class="fas fa-rocket"></i>
+                    <i class="fa-solid fa-rocket"></i>
                 </button>
 
                 <p class="zenith-footer-text">

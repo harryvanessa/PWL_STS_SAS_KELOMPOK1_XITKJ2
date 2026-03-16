@@ -1,0 +1,20 @@
+{
+  "name": "pwl_sts_sas_kelompok1_xitkj2",
+  "version": "1.0.0",
+  "description": "Saya cinta STUDIA, ucap kata orang yang cinta pelajaran sekolah",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harryvanessa/PWL_STS_SAS_KELOMPOK1_XITKJ2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/harryvanessa/PWL_STS_SAS_KELOMPOK1_XITKJ2/issues"
+  },
+  "homepage": "https://github.com/harryvanessa/PWL_STS_SAS_KELOMPOK1_XITKJ2#readme"
+}

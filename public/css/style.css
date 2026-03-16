@@ -400,6 +400,7 @@ footer {
     font-size: 1.1rem;
     transition: var(--transition);
     pointer-events: none;
+    z-index: 10;
 }
 
 .zenith-input-wrapper input,
@@ -434,7 +435,7 @@ footer {
     box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
 }
 
-.zenith-input-wrapper input:focus+i {
+.zenith-input-wrapper:focus-within i {
     color: var(--primary-color);
 }
 

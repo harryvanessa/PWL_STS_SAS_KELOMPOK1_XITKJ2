@@ -2,7 +2,7 @@
     <div class="zenith-side-visual">
         <div class="zenith-visual-content">
             <div class="zenith-logo">
-                <i class="fas fa-graduation-cap"></i>
+                <i class="fa-solid fa-graduation-cap"></i>
                 <span>MentorExpert</span>
             </div>
             <h1 class="zenith-hero-text">Tingkatkan Potensi Bersama Mentor Terbaik.</h1>
@@ -40,7 +40,7 @@
                 <div class="zenith-group">
                     <label>Username</label>
                     <div class="zenith-input-wrapper">
-                        <i class="far fa-user"></i>
+                        <i class="fa-solid fa-user"></i>
                         <input type="text" name="username" placeholder="Masukkan username Anda" required autocomplete="off">
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                         <a href="#">Lupa password?</a>
                     </div>
                     <div class="zenith-input-wrapper">
-                        <i class="far fa-lock-alt"></i>
+                        <i class="fa-solid fa-lock"></i>
                         <input type="password" name="password" placeholder="••••••••" required>
                     </div>
                 </div>
@@ -65,7 +65,7 @@
 
                 <button type="submit" class="zenith-btn-primary">
                     Masuk Sekarang
-                    <i class="fas fa-arrow-right"></i>
+                    <i class="fa-solid fa-arrow-right"></i>
                 </button>
 
                 <div class="zenith-divider">
