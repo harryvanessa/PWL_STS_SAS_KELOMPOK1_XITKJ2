@@ -3,72 +3,61 @@
 class Mentor extends Controller {
     public function __construct()
     {
+        parent::__construct();
         if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'mentor') {
-            header('Location: ' . BASEURL . '/auth');
-            exit;
+            $this->redirect('auth');
         }
     }
 
     public function index()
     {
-        $data['judul'] = 'Dashboard Mentor';
-        $data['profile'] = $this->model('Mentor_model')->getMentorProfile($_SESSION['user']['id']);
-        
-        if ($data['profile']['status'] !== 'approved') {
-            $this->view('templates/header', $data);
-            $this->view('mentor/pending_approval', $data);
-            $this->view('templates/footer');
-            return;
+        $uid     = $_SESSION['user']['id'];
+        $profile = $this->model('Mentor_model')->getMentorProfile($uid);
+        $data    = ['judul' => 'Dashboard Mentor', 'profile' => $profile];
+
+        if ($profile['status'] !== 'approved') {
+            return $this->render('mentor/pending_approval', $data);
         }
 
-        $data['requests'] = $this->model('Mentor_model')->getSessionRequests($_SESSION['user']['id']);
-
-        $this->view('templates/header', $data);
-        $this->view('mentor/index', $data);
-        $this->view('templates/footer');
+        $data['requests'] = $this->model('Mentor_model')->getSessionRequests($uid);
+        $this->render('mentor/index', $data);
     }
 
     public function confirm_session_with_link()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
-            $session_id = $_POST['id'];
-            $meeting_link = $_POST['meeting_link'] ?? null;
-            
-            if ($this->model('Mentor_model')->confirmSessionWithLink($session_id, $meeting_link) > 0) {
-                Flasher::setFlash('Sesi Bimbingan', 'Berhasil Dikonfirmasi', 'success');
-            } else {
-                Flasher::setFlash('Sesi', 'Gagal Dikonfirmasi', 'danger');
-            }
+        if ($this->isPost() && isset($_POST['id'])) {
+            $ok = $this->model('Mentor_model')->confirmSessionWithLink(
+                $_POST['id'],
+                $_POST['meeting_link'] ?? null
+            );
+            $ok > 0
+                ? Flasher::setFlash('Sesi Bimbingan', 'Berhasil Dikonfirmasi', 'success')
+                : Flasher::setFlash('Sesi', 'Gagal Dikonfirmasi', 'danger');
         }
-        header('Location: ' . BASEURL . '/mentor');
-        exit;
+        $this->redirect('mentor');
     }
 
-    public function reject_session($session_id)
+    public function reject_session($id)
     {
-        if ($this->model('Mentor_model')->updateSessionStatus($session_id, 'rejected') > 0) {
-            Flasher::setFlash('Sesi Bimbingan', 'Telah Ditolak', 'success');
-        } else {
-            Flasher::setFlash('Sesi', 'Gagal Ditolak', 'danger');
-        }
-        header('Location: ' . BASEURL . '/mentor');
-        exit;
+        $this->updateSession($id, 'rejected', 'Sesi Bimbingan', 'Telah Ditolak', 'Gagal Ditolak');
     }
 
-    public function complete_session($session_id)
+    public function complete_session($id)
     {
-        if ($this->model('Mentor_model')->updateSessionStatus($session_id, 'completed') > 0) {
-            Flasher::setFlash('Sesi Bimbingan', 'Ditandai Sebagai Selesai', 'success');
-        } else {
-            Flasher::setFlash('Sesi', 'Gagal Diselesaikan', 'danger');
-        }
-        header('Location: ' . BASEURL . '/mentor');
-        exit;
+        $this->updateSession($id, 'completed', 'Sesi Bimbingan', 'Ditandai Selesai', 'Gagal Diselesaikan');
     }
 
     public function chat($session_id)
     {
-        header('Location: ' . BASEURL . '/chat/session/' . $session_id);
-        exit;
+        $this->redirect('chat/session/' . $session_id);
+    }
+
+    private function updateSession($id, $status, $title, $successMsg, $failMsg)
+    {
+        $ok = $this->model('Mentor_model')->updateSessionStatus($id, $status);
+        $ok > 0
+            ? Flasher::setFlash($title, $successMsg, 'success')
+            : Flasher::setFlash($title, $failMsg, 'danger');
+        $this->redirect('mentor');
     }
 }
