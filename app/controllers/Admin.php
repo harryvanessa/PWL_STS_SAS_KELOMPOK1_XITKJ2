@@ -4,74 +4,57 @@ class Admin extends Controller {
     public function __construct()
     {
         parent::__construct();
-        // Auth check
         if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
-            header('Location: ' . BASEURL . '/auth');
-            exit;
+            $this->redirect('auth');
         }
     }
 
     public function index()
     {
-        $data['judul'] = 'Dashboard Admin';
-        $data['mentors'] = $this->model('Admin_model')->getPendingMentors();
-        $data['skills'] = $this->model('Skill_model')->getAllSkills();
-
-        $this->view('templates/header', $data);
-        $this->view('admin/index', $data);
-        $this->view('templates/footer');
+        $this->render('admin/index', [
+            'judul'   => 'Dashboard Admin',
+            'mentors' => $this->model('Admin_model')->getPendingMentors(),
+            'skills'  => $this->model('Skill_model')->getAllSkills(),
+        ]);
     }
 
     public function approve_mentor($id)
     {
-        if ($this->model('Admin_model')->approveMentor($id) > 0) {
-            Flasher::setFlash('Mentor Berhasil', 'Disetujui', 'success');
-        } else {
-            Flasher::setFlash('Mentor Gagal', 'Disetujui', 'danger');
-        }
-        header('Location: ' . BASEURL . '/admin');
-        exit;
+        $this->model('Admin_model')->approveMentor($id) > 0
+            ? Flasher::setFlash('Mentor', 'Berhasil Disetujui', 'success')
+            : Flasher::setFlash('Mentor', 'Gagal Disetujui', 'danger');
+        $this->redirect('admin');
     }
 
     public function reject_mentor()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id']) && isset($_POST['feedback'])) {
+        if ($this->isPost() && isset($_POST['id'], $_POST['feedback'])) {
             $this->validateCsrf();
-            $id = $_POST['id'];
-            $feedback = $_POST['feedback'];
-            
-            if ($this->model('Admin_model')->rejectMentor($id, $feedback) > 0) {
-                Flasher::setFlash('Mentor', 'Berhasil Ditolak dan Diberi Masukan', 'success');
-            } else {
-                Flasher::setFlash('Mentor', 'Gagal Ditolak', 'danger');
-            }
+            $ok = $this->model('Admin_model')->rejectMentor($_POST['id'], $_POST['feedback']);
+            $ok > 0
+                ? Flasher::setFlash('Mentor', 'Berhasil Ditolak', 'success')
+                : Flasher::setFlash('Mentor', 'Gagal Ditolak', 'danger');
         }
-        header('Location: ' . BASEURL . '/admin');
-        exit;
+        $this->redirect('admin');
     }
 
     public function add_skill()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($this->isPost()) {
             $this->validateCsrf();
-            if ($this->model('Admin_model')->addSkill($_POST) > 0) {
-                Flasher::setFlash('Keterampilan Baru', 'Berhasil Ditambahkan', 'success');
-            } else {
-                Flasher::setFlash('Keterampilan', 'Gagal Ditambahkan', 'danger');
-            }
+            $ok = $this->model('Admin_model')->addSkill($_POST);
+            $ok > 0
+                ? Flasher::setFlash('Keterampilan', 'Berhasil Ditambahkan', 'success')
+                : Flasher::setFlash('Keterampilan', 'Gagal Ditambahkan', 'danger');
         }
-        header('Location: ' . BASEURL . '/admin');
-        exit;
+        $this->redirect('admin');
     }
 
     public function delete_skill($id)
     {
-        if ($this->model('Admin_model')->deleteSkill($id) > 0) {
-            Flasher::setFlash('Keterampilan', 'Berhasil Dihapus', 'success');
-        } else {
-            Flasher::setFlash('Keterampilan', 'Gagal Dihapus', 'danger');
-        }
-        header('Location: ' . BASEURL . '/admin');
-        exit;
+        $this->model('Admin_model')->deleteSkill($id) > 0
+            ? Flasher::setFlash('Keterampilan', 'Berhasil Dihapus', 'success')
+            : Flasher::setFlash('Keterampilan', 'Gagal Dihapus', 'danger');
+        $this->redirect('admin');
     }
 }
