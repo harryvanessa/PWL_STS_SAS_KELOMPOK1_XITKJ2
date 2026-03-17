@@ -17,7 +17,13 @@ class Flasher {
         echo <<<HTML
         <div class="alert alert-{$tp} alert-dismissible fade show" role="alert">
             <strong>{$t}</strong> {$m}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <button type="button" cl
+            
+            
+            
+            
+            
+            ass="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         HTML;
     }

@@ -49,7 +49,7 @@ class Controller {
         if ($this->isPost()) {
             if (empty($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
                 session_destroy();
-                die('Security Error: CSRF Token Invalid. Please reload the page.');
+                die('+` Error: CSRF Token Invalid. Please reload the page.');
             }
         }
     }
