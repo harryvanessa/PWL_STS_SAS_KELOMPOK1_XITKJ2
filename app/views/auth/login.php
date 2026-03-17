@@ -1,10 +1,6 @@
 <div class="zenith-auth">
     <div class="zenith-side-visual">
         <div class="zenith-visual-content">
-            <div class="zenith-logo">
-                <i class="fa-solid fa-graduation-cap"></i>
-                <span>MentorExpert</span>
-            </div>
             <h1 class="zenith-hero-text">Tingkatkan Potensi Bersama Mentor Terbaik.</h1>
             <p class="zenith-hero-sub">Masa depan cerah dimulai dari bimbingan yang tepat. Bergabunglah dengan ribuan mahasiswa lainnya hari ini.</p>
             

@@ -1,10 +1,6 @@
 <div class="zenith-auth">
     <div class="zenith-side-visual" style="background: #0f172a;">
         <div class="zenith-visual-content">
-            <div class="zenith-logo">
-                <i class="fa-solid fa-graduation-cap"></i>
-                <span>MentorExpert</span>
-            </div>
             <h1 class="zenith-hero-text">Bergabung Sebagi Mentor Ahli.</h1>
             <p class="zenith-hero-sub">Bagikan ilmu, bimbing generasi masa depan, dan bangun profil profesional Anda di platform kami. Pendaftaran Anda akan ditinjau secara eksklusif oleh tim Admin.</p>
             

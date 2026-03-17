@@ -10,15 +10,15 @@ class Chat_model {
 
     public function getMessagesBySession($session_id)
     {
-        return $this->db->run(
-            "SELECT m.*, u.username, u.role
-             FROM messages m
-             JOIN users u ON m.sender_id = u.id
-             WHERE m.session_id = :session_id
-             ORDER BY m.created_at ASC",
-            ['session_id' => $session_id]
-        )->resultSet();
-    }
+        $query = "SELECT m.*, u.username, u.role 
+                  FROM messages m
+                  JOIN users u ON m.sender_id = u.id
+                  WHERE m.session_id = :session_id
+                  ORDER BY m.created_at ASC";
+        $this->db->query($query);
+        $this->db->bind('session_id', $session_id);
+        return $this->db->resultSet();
+    } 
 
     public function sendMessage($data)
     {

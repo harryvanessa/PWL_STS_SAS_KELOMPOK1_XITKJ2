@@ -20,7 +20,10 @@
         <a href="<?= BASEURL; ?>" class="brand-logo">
             <i class="<?= $brand['logo']; ?>"></i> <span class="brand-text"><?= $brand['name']; ?></span>
         </a>
-        <div class="nav-links">
+        <div class="nav-toggle" id="navToggle">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+        <div class="nav-links" id="navLinks">
             <?php if(isset($_SESSION['user'])): ?>
                 <?php if($_SESSION['user']['role'] == 'admin'): ?>
                     <a href="<?= BASEURL; ?>/admin" class="nav-link">Dashboard Admin</a>
