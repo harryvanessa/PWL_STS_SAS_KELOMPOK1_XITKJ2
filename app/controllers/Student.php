@@ -3,100 +3,81 @@
 class Student extends Controller {
     public function __construct()
     {
+        parent::__construct();
         if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'student') {
-            header('Location: ' . BASEURL . '/auth');
-            exit;
+            $this->redirect('auth');
         }
     }
 
     public function index()
     {
-        $data['judul'] = 'Dashboard Siswa';
-        $data['profile'] = $this->model('Student_model')->getStudentProfile($_SESSION['user']['id']);
-        $data['sessions'] = $this->model('Student_model')->getStudentSessions($_SESSION['user']['id']);
-
-        $this->view('templates/header', $data);
-        $this->view('student/index', $data);
-        $this->view('templates/footer');
+        $uid = $_SESSION['user']['id'];
+        $this->render('student/index', [
+            'judul'    => 'Dashboard Siswa',
+            'profile'  => $this->model('Student_model')->getStudentProfile($uid),
+            'sessions' => $this->model('Student_model')->getStudentSessions($uid),
+        ]);
     }
 
     public function questionnaire()
     {
-        $data['judul'] = 'Kuesioner Minat Bakat';
-        $this->view('templates/header', $data);
-        $this->view('student/questionnaire', $data);
-        $this->view('templates/footer');
+        $this->render('student/questionnaire', ['judul' => 'Kuesioner Minat Bakat']);
     }
 
     public function submit_questionnaire()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $interest_score = 0;
-            if ($_POST['q1'] == 'tech') $interest_score += 10;
-            if ($_POST['q2'] == 'creative') $interest_score -= 10;
-            
-            $interest = "Tertarik pada: " . $_POST['q1'] . " dan " . $_POST['q2'];
-            $this->model('Student_model')->updateInterest($_SESSION['user']['id'], $interest);
-            
-            header('Location: ' . BASEURL . '/student/select_skill?recommended=' . ($_POST['q1'] == 'tech' ? 'Web Development' : 'Desain Grafis'));
-            exit;
-        }
+        if (!$this->isPost()) return;
+
+        $interest = 'Tertarik pada: ' . $_POST['q1'] . ' dan ' . $_POST['q2'];
+        $this->model('Student_model')->updateInterest($_SESSION['user']['id'], $interest);
+
+        $recommended = $_POST['q1'] === 'tech' ? 'Web Development' : 'Desain Grafis';
+        $this->redirect('student/select_skill?recommended=' . urlencode($recommended));
     }
 
     public function select_skill()
     {
-        $data['judul'] = 'Pilih Keterampilan';
-        $data['skills'] = $this->model('Skill_model')->getAllSkills();
-        $data['recommended'] = isset($_GET['recommended']) ? $_GET['recommended'] : null;
-
-        $this->view('templates/header', $data);
-        $this->view('student/select_skill', $data);
-        $this->view('templates/footer');
+        $this->render('student/select_skill', [
+            'judul'       => 'Pilih Keterampilan',
+            'skills'      => $this->model('Skill_model')->getAllSkills(),
+            'recommended' => $_GET['recommended'] ?? null,
+        ]);
     }
 
     public function gacha()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['skill_id'])) {
-            $skill_id = $_POST['skill_id'];
-            $skill = $this->model('Skill_model')->getSkillById($skill_id);
-            $mentor = $this->model('Student_model')->gachaMentor($skill_id);
-
-            $data['judul'] = 'Hasil Pencarian Mentor';
-            $data['skill'] = $skill;
-            $data['mentor'] = $mentor;
-
-            $this->view('templates/header', $data);
-            $this->view('student/gacha_result', $data);
-            $this->view('templates/footer');
-        } else {
-            header('Location: ' . BASEURL . '/student/select_skill');
+        if (!$this->isPost() || empty($_POST['skill_id'])) {
+            return $this->redirect('student/select_skill');
         }
+
+        $skill_id = $_POST['skill_id'];
+        $this->render('student/gacha_result', [
+            'judul'  => 'Hasil Pencarian Mentor',
+            'skill'  => $this->model('Skill_model')->getSkillById($skill_id),
+            'mentor' => $this->model('Student_model')->gachaMentor($skill_id),
+        ]);
     }
 
     public function schedule()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $sessionData = [
-                'student_id' => $_SESSION['user']['id'],
-                'mentor_id' => $_POST['mentor_user_id'],
-                'skill_id' => $_POST['skill_id'],
-                'session_date' => $_POST['session_date'],
-                'notes' => $_POST['notes']
-            ];
+        if (!$this->isPost()) return;
 
-            if ($this->model('Student_model')->requestSession($sessionData) > 0) {
-                Flasher::setFlash('Jadwal Sesi', 'Berhasil Diajukan', 'success');
-            } else {
-                Flasher::setFlash('Jadwal Sesi', 'Gagal Diajukan', 'danger');
-            }
-            header('Location: ' . BASEURL . '/student');
-            exit;
-        }
+        $ok = $this->model('Student_model')->requestSession([
+            'student_id'   => $_SESSION['user']['id'],
+            'mentor_id'    => $_POST['mentor_user_id'],
+            'skill_id'     => $_POST['skill_id'],
+            'session_date' => $_POST['session_date'],
+            'notes'        => $_POST['notes'],
+        ]);
+
+        $ok > 0
+            ? Flasher::setFlash('Jadwal Sesi', 'Berhasil Diajukan', 'success')
+            : Flasher::setFlash('Jadwal Sesi', 'Gagal Diajukan', 'danger');
+        $this->redirect('student');
     }
 
     public function chat($session_id)
     {
-        header('Location: ' . BASEURL . '/chat/session/' . $session_id);
-        exit;
+        $this->redirect('chat/session/' . $session_id);
     }
 }
