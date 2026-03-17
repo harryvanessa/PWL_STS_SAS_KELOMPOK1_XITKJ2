@@ -27,7 +27,7 @@ Saya cinta STUDIA, ucap kata orang yang cinta pelajaran sekolah
     setelah itu
     ```bash
     # Cara paling simpel biar Clean URL jalan di PHP Built-in Server:
-    php -S localhost:8000 -t public public/index.php
+    php -S localhost:8000 -t public/
     ```
 2. Pastikan konfigurasi database sudah benar:
    ```php
