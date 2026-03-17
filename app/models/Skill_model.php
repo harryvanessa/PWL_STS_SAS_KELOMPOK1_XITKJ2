@@ -1,7 +1,6 @@
 <?php
 
 class Skill_model {
-    private $table = 'skills';
     private $db;
 
     public function __construct()
@@ -11,14 +10,11 @@ class Skill_model {
 
     public function getAllSkills()
     {
-        $this->db->query('SELECT * FROM ' . $this->table);
-        return $this->db->resultSet();
+        return $this->db->run("SELECT * FROM skills")->resultSet();
     }
 
     public function getSkillById($id)
     {
-        $this->db->query('SELECT * FROM ' . $this->table . ' WHERE id=:id');
-        $this->db->bind('id', $id);
-        return $this->db->single();
+        return $this->db->run("SELECT * FROM skills WHERE id = :id", ['id' => $id])->single();
     }
 }
