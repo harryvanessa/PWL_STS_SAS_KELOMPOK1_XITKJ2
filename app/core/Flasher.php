@@ -1,5 +1,6 @@
 <?php
 
+//di pikir2 kok kek larvel dah
 class Flasher {
     public static function setFlash($title, $message, $type = 'success')
     {

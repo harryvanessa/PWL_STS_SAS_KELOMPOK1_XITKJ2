@@ -3,7 +3,7 @@
 <footer>
     <div class="container footer-content">
         <?php $brand = $data['home']['brand'] ?? (require '../app/config/home_data.php')['brand']; ?>
-        <p>&copy; <?= date('Y'); ?> <?= $brand['name']; ?> - Aplikasi Mentorship PWL. Desain premium dengan HTML & CSS Murni.</p>
+        <p>&copy; <?= date('Y'); ?> <?= $brand['name']; ?> SMK Immanuel Pontianak</p>
     </div>
 </footer>
 
@@ -16,6 +16,24 @@
                 e.target.parentElement.style.display = 'none';
             });
         });
+
+        // Navbar toggle
+        const navToggle = document.getElementById('navToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        if (navToggle && navLinks) {
+            navToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                const icon = navToggle.querySelector('i');
+                if (navLinks.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-xmark');
+                } else {
+                    icon.classList.remove('fa-xmark');
+                    icon.classList.add('fa-bars');
+                }
+            });
+        }
 
         // Add scrolled class to navbar
         window.addEventListener('scroll', () => {
