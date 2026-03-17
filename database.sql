@@ -122,4 +122,42 @@ CREATE TABLE `messages` (
   CONSTRAINT `fk_msg_recipient` FOREIGN KEY (`recipient_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
+-- --------------------------------------------------------
+
+-- Table structure for table `student_skills` (Pertukaran Keterampilan Antar Siswa)
+CREATE TABLE `student_skills` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `student_id` int(11) NOT NULL,
+  `skill_id` int(11) NOT NULL,
+  `level` enum('beginner','intermediate','advanced') NOT NULL DEFAULT 'beginner',
+  `description` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `student_id` (`student_id`),
+  KEY `skill_id` (`skill_id`),
+  CONSTRAINT `fk_ss_student` FOREIGN KEY (`student_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_ss_skill`   FOREIGN KEY (`skill_id`)   REFERENCES `skills` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+-- Table structure for table `skill_exchanges` (Permintaan Pertukaran)
+CREATE TABLE `skill_exchanges` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `requester_id` int(11) NOT NULL,
+  `provider_id` int(11) NOT NULL,
+  `student_skill_id` int(11) NOT NULL,
+  `message` text DEFAULT NULL,
+  `status` enum('pending','accepted','rejected') NOT NULL DEFAULT 'pending',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `requester_id` (`requester_id`),
+  KEY `provider_id` (`provider_id`),
+  KEY `student_skill_id` (`student_skill_id`),
+  CONSTRAINT `fk_ex_requester` FOREIGN KEY (`requester_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_ex_provider`  FOREIGN KEY (`provider_id`)  REFERENCES `users` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_ex_skill`     FOREIGN KEY (`student_skill_id`) REFERENCES `student_skills` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 COMMIT;

@@ -11,18 +11,30 @@
         <!-- Action Cards -->
         <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
             <?php if(empty($data['profile']['interest'])): ?>
-                <div class="glass-card" style="flex: 1; min-width: min(100%, 480px); min-height: 180px; justify-content: center; text-align: center; background: rgba(79, 70, 229, 0.1); border-color: var(--primary-color);">
-                    <h3 style="margin-bottom: 1rem;">Mulai Perjalanan Belajarmu</h3>
-                    <p class="text-muted" style="margin-bottom: 1.5rem;">Ikuti kuesioner singkat untuk mendapatkan rekomendasi keterampilan yang cocok dengan minatmu.</p>
-                    <a href="<?= BASEURL; ?>/student/questionnaire" class="btn-primary" style="display: inline-block;">Ikuti Kuesioner Sekarang</a>
+                <div class="glass-card" style="flex: 1; min-width: min(100%, 320px); text-align: center; background: rgba(79, 70, 229, 0.1); border-color: var(--primary-color);">
+                    <h3 style="margin-bottom: 1rem;">Mulai Perjalanan Belajar</h3>
+                    <p class="text-muted" style="margin-bottom: 1.5rem;">Ikuti kuesioner singkat untuk rekomendasi keterampilan yang cocok.</p>
+                    <a href="<?= BASEURL; ?>/student/questionnaire" class="btn-primary" style="display: inline-block;">Ikuti Kuesioner</a>
                 </div>
             <?php else: ?>
-                <div class="glass-card" style="flex: 1; min-width: min(100%, 480px); min-height: 180px; justify-content: center;">
+                <div class="glass-card" style="flex: 1; min-width: min(100%, 320px);">
                     <h3 style="margin-bottom: 1rem;">Cari Mentor Baru</h3>
-                    <p class="text-muted" style="margin-bottom: 1.5rem;">Temukan pakar yang tepat untuk membimbing keterampilanmu selanjutnya.</p>
+                    <p class="text-muted" style="margin-bottom: 1.5rem;">Temukan pakar yang tepat untuk membimbing keterampilanmu.</p>
                     <a href="<?= BASEURL; ?>/student/select_skill" class="btn-primary" style="display: inline-block;">Mulai Pencarian (Gacha)</a>
                 </div>
             <?php endif; ?>
+
+            <!-- Skill Exchange Card -->
+            <div class="glass-card" style="flex: 1; min-width: min(100%, 320px); background: rgba(16, 185, 129, 0.08); border-color: var(--secondary-color);">
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                    <div style="width: 2.5rem; height: 2.5rem; background: rgba(16,185,129,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; color: var(--secondary-color); font-size: 1.1rem;">
+                        <i class="fa-solid fa-handshake"></i>
+                    </div>
+                    <h3 style="font-size: 1.1rem;">Pertukaran Keterampilan</h3>
+                </div>
+                <p class="text-muted" style="margin-bottom: 1.5rem;">Bagikan keahlianmu dan belajar dari sesama siswa di platform ini.</p>
+                <a href="<?= BASEURL; ?>/student/skill_exchange" class="btn-primary" style="display: inline-block; background: var(--secondary-color);">Jelajahi Skill Exchange</a>
+            </div>
         </div>
 
         <!-- History/Upcoming Sessions -->

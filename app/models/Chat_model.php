@@ -18,7 +18,7 @@ class Chat_model {
         $this->db->query($query);
         $this->db->bind('session_id', $session_id);
         return $this->db->resultSet();
-    }
+    } 
 
     public function sendMessage($data)
     {
