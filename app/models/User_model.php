@@ -52,7 +52,7 @@ class User_model {
                 "INSERT INTO users (username, password, role) VALUES (:username, :password, 'mentor')",
                 ['username' => $data['username'], 'password' => password_hash($data['password'], PASSWORD_DEFAULT)]
             )->execute();
-
+            
             $uid = $this->db->lastInsertId();
 
             return $this->db->run(
