@@ -12,10 +12,14 @@
                 <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;"><?= htmlspecialchars($data['mentor']['full_name']); ?></h3>
                 <p class="text-sm text-muted" style="margin-bottom: 1rem;">@<?= htmlspecialchars($data['mentor']['username']); ?></p>
                 
-                <div style="text-align: left; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 0.75rem;">
+                <div style="text-align: left; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 0.75rem; margin-bottom: 1rem;">
                     <strong>Pengalaman:</strong><br>
                     <span class="text-muted text-sm"><?= htmlspecialchars($data['mentor']['experience']); ?></span>
                 </div>
+                
+                <a href="<?= BASEURL; ?>/student/mentor_comments/<?= $data['mentor']['user_id']; ?>/<?= $data['skill']['id']; ?>" class="btn-secondary" style="display: inline-block; padding: 0.5rem 1rem; font-size: 0.9rem; border-radius: 2rem;">
+                    <i class="fa-regular fa-comments"></i> Lihat Komentar
+                </a>
             </div>
 
             <!-- Form Ajukan Jadwal -->
