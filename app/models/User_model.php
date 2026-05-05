@@ -34,12 +34,14 @@ class User_model {
 
             $uid = $this->db->lastInsertId();
 
-            return $this->db->run(
+            $this->db->run(
                 "INSERT INTO student_profiles (user_id, full_name, email, phone, address)
                  VALUES (:user_id, :full_name, :email, :phone, :address)",
                 ['user_id' => $uid, 'full_name' => $data['full_name'],
                  'email'   => $data['email'], 'phone' => $data['phone'], 'address' => $data['address']]
             )->rowCount();
+
+            return $uid;
         } catch (PDOException) {
             return -1;
         }

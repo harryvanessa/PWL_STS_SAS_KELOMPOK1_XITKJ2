@@ -11,7 +11,8 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-
+CREATE DATABASE pwl_db;
+USE pwl_db;
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -72,6 +73,20 @@ INSERT INTO `mentor_profiles` (`id`, `user_id`, `skill_id`, `full_name`, `email`
 (1, 4, 1, 'budi.spd', 'mentor1@gmail.com', '082112331', NULL, '213', 'rejected', 'kamu bot'),
 (2, 5, 2, 'fkmjsdnkj', 'dasd@gmail.com', '08213123', NULL, '123123', 'rejected', 'ebot si'),
 (3, 6, 1, 'tes1', '123@123', '0812312321', NULL, 's', 'approved', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `major_selections`
+--
+
+CREATE TABLE `major_selections` (
+  `id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `major` varchar(100) NOT NULL,
+  `app` varchar(100) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -261,6 +276,13 @@ ALTER TABLE `mentor_profiles`
   ADD KEY `skill_id` (`skill_id`);
 
 --
+-- Indexes for table `major_selections`
+--
+ALTER TABLE `major_selections`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indexes for table `messages`
 --
 ALTER TABLE `messages`
@@ -341,6 +363,12 @@ ALTER TABLE `mentor_profiles`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `major_selections`
+--
+ALTER TABLE `major_selections`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
@@ -405,6 +433,12 @@ ALTER TABLE `mentor_comments`
 ALTER TABLE `mentor_profiles`
   ADD CONSTRAINT `fk_mentor_skill` FOREIGN KEY (`skill_id`) REFERENCES `skills` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_mentor_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `major_selections`
+--
+ALTER TABLE `major_selections`
+  ADD CONSTRAINT `fk_major_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `messages`

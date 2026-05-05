@@ -57,4 +57,13 @@ class Admin extends Controller {
             : Flasher::setFlash('Keterampilan', 'Gagal Dihapus', 'danger');
         $this->redirect('admin');
     }
+
+    public function major_selections()
+    {
+        $this->render('admin/major_selections', [
+            'judul' => 'Data Pilihan Jurusan Siswa',
+            'major_selections' => $this->model('Major_model')->getAllMajorSelections(),
+            'stats' => $this->model('Major_model')->getMajorSelectionStats(),
+        ]);
+    }
 }

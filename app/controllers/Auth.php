@@ -44,10 +44,14 @@ class Auth extends Controller {
             $this->validateCsrf();
             $this->checkUsernameTaken($_POST['username'], 'auth/register_student');
 
-            $ok = $this->model('User_model')->registerStudent($_POST);
-            $ok > 0
-                ? $this->flashRedirect('Pendaftaran Siswa', 'Berhasil! Pilih jurusanmu sebelum login.', 'success', 'auth/major_search')
-                : $this->flashRedirect('Pendaftaran Siswa', 'Gagal. Coba lagi.', 'danger', 'auth/register_student');
+            $uid = $this->model('User_model')->registerStudent($_POST);
+            if ($uid > 0) {
+                // Simpan user_id ke session untuk major_search
+                $_SESSION['new_student_id'] = $uid;
+                $this->flashRedirect('Pendaftaran Siswa', 'Berhasil! Pilih jurusanmu sebelum login.', 'success', 'auth/major_search');
+            } else {
+                $this->flashRedirect('Pendaftaran Siswa', 'Gagal. Coba lagi.', 'danger', 'auth/register_student');
+            }
         }
 
         $this->render('auth/register_student', ['judul' => 'Daftar Sebagai Siswa']);
@@ -88,6 +92,14 @@ class Auth extends Controller {
 
             if ($app !== '' && !in_array($app, $majors[$major]['apps'], true)) {
                 $this->flashRedirect('Pilihan Aplikasi', 'Pilihan aplikasi tidak valid. Silakan pilih kembali.', 'danger', 'auth/major_search?major=' . urlencode($major));
+            }
+
+            // Simpan pilihan jurusan ke database
+            if (isset($_SESSION['new_student_id'])) {
+                $this->model('Major_model')->saveMajorSelection($_SESSION['new_student_id'], $major, $app);
+                unset($_SESSION['new_student_id']); // Hapus session setelah digunakan
+            } elseif (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'student') {
+                $this->model('Major_model')->saveMajorSelection($_SESSION['user']['id'], $major, $app);
             }
 
             Flasher::setFlash('Terima Kasih', 'Jurusan dan aplikasi berhasil dipilih. Silakan login untuk melanjutkan.', 'success');
