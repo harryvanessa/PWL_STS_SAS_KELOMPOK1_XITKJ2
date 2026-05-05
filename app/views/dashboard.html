@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studia Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">
+            <i class="fa-solid fa-book-open"></i>
+            <span>STUDIA</span>
+        </div>
+        <nav class="nav-links">
+            <a href="#"><i class="fa-regular fa-user"></i> Dashboard</a>
+            <a href="#"><i class="fa-solid fa-gear"></i> Admin</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="page-header">
+            <div class="title-text">
+                <h1>Dashboard Saya</h1>
+                <p>Kelola bimbingan dan lihat riwayat pembelajaran Anda</p>
+            </div>
+            <button class="btn-primary">Booking Baru</button>
+        </div>
+
+        <section class="stats-grid">
+            <div class="card">
+                <div class="card-icon-box"></div>
+                <div class="card-info">
+                    <span class="label">Booking Mendatang</span>
+                    <span class="value">0</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon-box"></div>
+                <div class="card-info">
+                    <span class="label">Sesi Selesai</span>
+                    <span class="value">0</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon-box"></div>
+                <div class="card-info">
+                    <span class="label">Total Booking</span>
+                    <span class="value">0</span>
+                </div>
+            </div>
+        </section>
+
+        <div class="tab-container">
+            <button class="tab active">Mendatang (0)</button>
+            <button class="tab">Riwayat (0)</button>
+        </div>
+
+        <div class="content-box">
+            <div class="empty-state">
+                <i class="fa-regular fa-calendar"></i>
+                <p>Anda belum memiliki booking mendatang</p>
+                <button class="btn-primary">Buat Booking Baru</button>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

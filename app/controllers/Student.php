@@ -39,9 +39,14 @@ class Student extends Controller
 
     public function select_skill()
     {
+        $all_skills = $this->model('Skill_model')->getAllSkills();
+        $filtered_skills = array_filter($all_skills, function ($skill) {
+            return !in_array($skill['name'], ['Bahasa Inggris', 'Digital Marketing']);
+        });
+
         $this->render('student/select_skill', [
             'judul' => 'Pilih Keterampilan',
-            'skills' => $this->model('Skill_model')->getAllSkills(),
+            'skills' => $filtered_skills,
             'recommended' => $_GET['recommended'] ?? null,
         ]);
     }
@@ -53,6 +58,13 @@ class Student extends Controller
         }
 
         $skill_id = $_POST['skill_id'];
+        $mentor_id = $_POST['mentor_id'] ?? null;
+
+        // If returning from comments page, use the specific mentor. Otherwise, randomize.
+        $mentor = $mentor_id
+            ? $this->model('Student_model')->getMentorById($mentor_id, $skill_id)
+            : $this->model('Student_model')->gachaMentor($skill_id);
+
         $this->render('student/gacha_result', [
             'judul' => 'Hasil Pencarian Mentor',
             'skill' => $this->model('Skill_model')->getSkillById($skill_id),
