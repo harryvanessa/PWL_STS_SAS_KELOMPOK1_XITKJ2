@@ -1,6 +1,7 @@
 <?php
 
-class Student extends Controller {
+class Student extends Controller
+{
     public function __construct()
     {
         parent::__construct();
@@ -13,8 +14,8 @@ class Student extends Controller {
     {
         $uid = $_SESSION['user']['id'];
         $this->render('student/index', [
-            'judul'    => 'Dashboard Siswa',
-            'profile'  => $this->model('Student_model')->getStudentProfile($uid),
+            'judul' => 'Dashboard Siswa',
+            'profile' => $this->model('Student_model')->getStudentProfile($uid),
             'sessions' => $this->model('Student_model')->getStudentSessions($uid),
         ]);
     }
@@ -26,7 +27,8 @@ class Student extends Controller {
 
     public function submit_questionnaire()
     {
-        if (!$this->isPost()) return;
+        if (!$this->isPost())
+            return;
 
         $interest = 'Tertarik pada: ' . $_POST['q1'] . ' dan ' . $_POST['q2'];
         $this->model('Student_model')->updateInterest($_SESSION['user']['id'], $interest);
@@ -38,8 +40,8 @@ class Student extends Controller {
     public function select_skill()
     {
         $this->render('student/select_skill', [
-            'judul'       => 'Pilih Keterampilan',
-            'skills'      => $this->model('Skill_model')->getAllSkills(),
+            'judul' => 'Pilih Keterampilan',
+            'skills' => $this->model('Skill_model')->getAllSkills(),
             'recommended' => $_GET['recommended'] ?? null,
         ]);
     }
@@ -52,22 +54,23 @@ class Student extends Controller {
 
         $skill_id = $_POST['skill_id'];
         $this->render('student/gacha_result', [
-            'judul'  => 'Hasil Pencarian Mentor',
-            'skill'  => $this->model('Skill_model')->getSkillById($skill_id),
+            'judul' => 'Hasil Pencarian Mentor',
+            'skill' => $this->model('Skill_model')->getSkillById($skill_id),
             'mentor' => $this->model('Student_model')->gachaMentor($skill_id),
         ]);
     }
 
     public function schedule()
     {
-        if (!$this->isPost()) return;
+        if (!$this->isPost())
+            return;
 
         $ok = $this->model('Student_model')->requestSession([
-            'student_id'   => $_SESSION['user']['id'],
-            'mentor_id'    => $_POST['mentor_user_id'],
-            'skill_id'     => $_POST['skill_id'],
+            'student_id' => $_SESSION['user']['id'],
+            'mentor_id' => $_POST['mentor_user_id'],
+            'skill_id' => $_POST['skill_id'],
             'session_date' => $_POST['session_date'],
-            'notes'        => $_POST['notes'],
+            'notes' => $_POST['notes'],
         ]);
 
         $ok > 0
@@ -86,13 +89,13 @@ class Student extends Controller {
     public function skill_exchange()
     {
         $uid = $_SESSION['user']['id'];
-        $em  = $this->model('Exchange_model');
+        $em = $this->model('Exchange_model');
 
         $this->render('student/skill_exchange', [
-            'judul'    => 'Pertukaran Keterampilan',
-            'skills'   => $this->model('Skill_model')->getAllSkills(),
+            'judul' => 'Pertukaran Keterampilan',
+            'skills' => $this->model('Skill_model')->getAllSkills(),
             'listings' => $em->getAllStudentSkills($uid),
-            'my_skills'=> $em->getMySkills($uid),
+            'my_skills' => $em->getMySkills($uid),
             'incoming' => $em->getIncomingRequests($uid),
             'outgoing' => $em->getOutgoingRequests($uid),
         ]);
@@ -101,7 +104,8 @@ class Student extends Controller {
     public function skill_detail($id)
     {
         $skill = $this->model('Exchange_model')->getStudentSkillDetail($id);
-        if (!$skill) return $this->redirect('student/skill_exchange');
+        if (!$skill)
+            return $this->redirect('student/skill_exchange');
 
         $this->render('student/skill_detail', [
             'judul' => 'Detail Keterampilan',
@@ -111,13 +115,14 @@ class Student extends Controller {
 
     public function add_skill()
     {
-        if (!$this->isPost()) return $this->redirect('student/skill_exchange');
+        if (!$this->isPost())
+            return $this->redirect('student/skill_exchange');
         $this->validateCsrf();
 
         $ok = $this->model('Exchange_model')->addStudentSkill([
-            'student_id'  => $_SESSION['user']['id'],
-            'skill_id'    => $_POST['skill_id'],
-            'level'       => $_POST['level'],
+            'student_id' => $_SESSION['user']['id'],
+            'skill_id' => $_POST['skill_id'],
+            'level' => $_POST['level'],
             'description' => $_POST['description'],
         ]);
 
@@ -137,11 +142,12 @@ class Student extends Controller {
 
     public function request_exchange()
     {
-        if (!$this->isPost()) return $this->redirect('student/skill_exchange');
+        if (!$this->isPost())
+            return $this->redirect('student/skill_exchange');
         $this->validateCsrf();
 
         $uid = $_SESSION['user']['id'];
-        $em  = $this->model('Exchange_model');
+        $em = $this->model('Exchange_model');
 
         // Prevent duplicate requests
         if ($em->hasExistingRequest($uid, $_POST['student_skill_id'])) {
@@ -149,10 +155,10 @@ class Student extends Controller {
         }
 
         $ok = $em->requestExchange([
-            'requester_id'     => $uid,
-            'provider_id'      => $_POST['provider_id'],
+            'requester_id' => $uid,
+            'provider_id' => $_POST['provider_id'],
             'student_skill_id' => $_POST['student_skill_id'],
-            'message'          => $_POST['message'] ?? '',
+            'message' => $_POST['message'] ?? '',
         ]);
 
         $ok > 0
@@ -162,7 +168,8 @@ class Student extends Controller {
 
     public function respond_exchange()
     {
-        if (!$this->isPost()) return $this->redirect('student/skill_exchange');
+        if (!$this->isPost())
+            return $this->redirect('student/skill_exchange');
         $this->validateCsrf();
 
         $status = $_POST['action'] === 'accept' ? 'accepted' : 'rejected';

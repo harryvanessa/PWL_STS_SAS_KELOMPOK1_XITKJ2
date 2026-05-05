@@ -1,6 +1,7 @@
 <?php
 
-class Database {
+class Database
+{
     private $dbh;
     private $stmt;
 
@@ -9,8 +10,8 @@ class Database {
         $dsn = 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4';
         try {
             $this->dbh = new PDO($dsn, DB_USER, DB_PASS, [
-                PDO::ATTR_PERSISTENT   => true,
-                PDO::ATTR_ERRMODE      => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_PERSISTENT => true,
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             ]);
         } catch (PDOException $e) {
@@ -27,10 +28,10 @@ class Database {
     {
         if ($type === null) {
             $type = match (true) {
-                is_int($value)  => PDO::PARAM_INT,
+                is_int($value) => PDO::PARAM_INT,
                 is_bool($value) => PDO::PARAM_BOOL,
                 is_null($value) => PDO::PARAM_NULL,
-                default         => PDO::PARAM_STR,
+                default => PDO::PARAM_STR,
             };
         }
         $this->stmt->bindValue($param, $value, $type);

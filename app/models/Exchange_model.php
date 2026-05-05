@@ -1,6 +1,7 @@
 <?php
 
-class Exchange_model {
+class Exchange_model
+{
     private $db;
 
     public function __construct()
@@ -78,8 +79,12 @@ class Exchange_model {
         return $this->db->run(
             "INSERT INTO student_skills (student_id, skill_id, level, description)
              VALUES (:student_id, :skill_id, :level, :description)",
-            ['student_id'  => $data['student_id'],  'skill_id'    => $data['skill_id'],
-             'level'       => $data['level'],        'description' => $data['description']]
+            [
+                'student_id' => $data['student_id'],
+                'skill_id' => $data['skill_id'],
+                'level' => $data['level'],
+                'description' => $data['description']
+            ]
         )->rowCount();
     }
 
@@ -98,10 +103,12 @@ class Exchange_model {
         return $this->db->run(
             "INSERT INTO skill_exchanges (requester_id, provider_id, student_skill_id, message)
              VALUES (:requester_id, :provider_id, :student_skill_id, :message)",
-            ['requester_id'     => $data['requester_id'],
-             'provider_id'      => $data['provider_id'],
-             'student_skill_id' => $data['student_skill_id'],
-             'message'          => $data['message']]
+            [
+                'requester_id' => $data['requester_id'],
+                'provider_id' => $data['provider_id'],
+                'student_skill_id' => $data['student_skill_id'],
+                'message' => $data['message']
+            ]
         )->rowCount();
     }
 

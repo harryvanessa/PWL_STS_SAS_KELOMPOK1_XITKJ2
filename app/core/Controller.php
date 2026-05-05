@@ -1,6 +1,7 @@
 <?php
 
-class Controller {
+class Controller
+{
     public function __construct()
     {
         if (!isset($_SESSION['csrf_token'])) {
