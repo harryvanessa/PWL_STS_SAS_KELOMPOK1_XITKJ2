@@ -68,8 +68,72 @@ class Student extends Controller
         $this->render('student/gacha_result', [
             'judul' => 'Hasil Pencarian Mentor',
             'skill' => $this->model('Skill_model')->getSkillById($skill_id),
-            'mentor' => $this->model('Student_model')->gachaMentor($skill_id),
+            'mentor' => $mentor,
         ]);
+    }
+
+    public function mentor_comments($mentor_id, $skill_id)
+    {
+        $mentor = $this->model('Student_model')->getMentorById($mentor_id, $skill_id);
+        if (!$mentor) return $this->redirect('student/select_skill');
+
+        $this->render('student/mentor_comments', [
+            'judul'    => 'Komentar Mentor',
+            'mentor'   => $mentor,
+            'skill_id' => $skill_id,
+            'comments' => $this->model('Student_model')->getMentorComments($mentor_id),
+        ]);
+    }
+
+    public function post_mentor_comment()
+    {
+        if (!$this->isPost()) {
+            return $this->redirect('student');
+        }
+
+        $mentor_id = $_POST['mentor_id'];
+        $skill_id  = $_POST['skill_id'];
+        $comment   = trim($_POST['comment']);
+
+        if (!empty($comment)) {
+            $this->model('Student_model')->addMentorComment([
+                'mentor_user_id'  => $mentor_id,
+                'student_user_id' => $_SESSION['user']['id'],
+                'comment'         => htmlspecialchars($comment)
+            ]);
+        }
+        
+        $this->redirect('student/mentor_comments/' . $mentor_id . '/' . $skill_id);
+    }
+
+    public function update_mentor_comment()
+    {
+        if (!$this->isPost()) return $this->redirect('student');
+
+        $id = $_POST['comment_id'];
+        $mentor_id = $_POST['mentor_id'];
+        $skill_id = $_POST['skill_id'];
+        $comment = trim($_POST['comment']);
+        $student_id = $_SESSION['user']['id'];
+
+        if (!empty($comment)) {
+            $this->model('Student_model')->updateMentorComment($id, $student_id, htmlspecialchars($comment));
+            Flasher::setFlash('Komentar', 'Berhasil diperbarui', 'success');
+        }
+
+        $this->redirect('student/mentor_comments/' . $mentor_id . '/' . $skill_id);
+    }
+
+    public function delete_mentor_comment($id, $mentor_id, $skill_id)
+    {
+        $student_id = $_SESSION['user']['id'];
+        $ok = $this->model('Student_model')->deleteMentorComment($id, $student_id);
+        
+        $ok > 0
+            ? Flasher::setFlash('Komentar', 'Berhasil dihapus', 'success')
+            : Flasher::setFlash('Komentar', 'Gagal dihapus', 'danger');
+
+        $this->redirect('student/mentor_comments/' . $mentor_id . '/' . $skill_id);
     }
 
     public function schedule()

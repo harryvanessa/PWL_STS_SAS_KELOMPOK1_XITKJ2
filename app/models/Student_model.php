@@ -96,4 +96,24 @@ class Student_model {
             ]
         )->rowCount();
     }
+
+    public function updateMentorComment($id, $student_user_id, $comment)
+    {
+        return $this->db->run(
+            "UPDATE mentor_comments SET comment = :comment WHERE id = :id AND student_user_id = :student_user_id",
+            [
+                'comment' => $comment,
+                'id' => $id,
+                'student_user_id' => $student_user_id
+            ]
+        )->rowCount();
+    }
+
+    public function deleteMentorComment($id, $student_user_id)
+    {
+        return $this->db->run(
+            "DELETE FROM mentor_comments WHERE id = :id AND student_user_id = :student_user_id",
+            ['id' => $id, 'student_user_id' => $student_user_id]
+        )->rowCount();
+    }
 }

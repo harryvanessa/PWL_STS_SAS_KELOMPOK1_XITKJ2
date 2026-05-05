@@ -13,6 +13,7 @@
         </div>
 
         <h3 style="margin-bottom: 2rem; font-size: 1.7rem;"><i class="fa-regular fa-comments"></i> Ulasan Siswa</h3>
+        <?php Flasher::flash(); ?>
 
         <!-- Comments List -->
         <div style="margin-bottom: 3rem; max-height: 350px; overflow-y: auto; padding-right: 1.5rem;">
@@ -24,11 +25,42 @@
             <?php else: ?>
                 <?php foreach($data['comments'] as $c): ?>
                     <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); padding: 1.75rem; border-radius: 1.25rem; margin-bottom: 1.5rem;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                            <strong style="color: #60a5fa; font-size: 1.2rem;"><?= htmlspecialchars($c['full_name']); ?></strong>
-                            <span style="font-size: 0.95rem; color: var(--text-muted);"><?= date('d M Y, H:i', strtotime($c['created_at'])); ?></span>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                            <div>
+                                <strong style="color: #60a5fa; font-size: 1.2rem;"><?= htmlspecialchars($c['full_name']); ?></strong>
+                                <br><span style="font-size: 0.85rem; color: var(--text-muted);"><?= date('d M Y, H:i', strtotime($c['created_at'])); ?></span>
+                            </div>
+                            
+                            <?php if ($c['student_user_id'] == $_SESSION['user']['id']): ?>
+                                <div style="display: flex; gap: 1rem; align-items: center;">
+                                    <?php if(isset($_GET['edit_comment_id']) && $_GET['edit_comment_id'] == $c['id']): ?>
+                                        <a href="<?= BASEURL; ?>/student/mentor_comments/<?= $data['mentor']['user_id']; ?>/<?= $data['skill_id']; ?>" class="btn-small" style="background: var(--secondary-color); border: none; padding: 0.4rem 0.8rem; border-radius: 0.5rem; color: white; cursor: pointer; font-size: 0.85rem; text-decoration: none;"><i class="fa-solid fa-xmark" style="margin-right: 0.4rem;"></i> Batal Edit</a>
+                                    <?php else: ?>
+                                        <a href="<?= BASEURL; ?>/student/mentor_comments/<?= $data['mentor']['user_id']; ?>/<?= $data['skill_id']; ?>?edit_comment_id=<?= $c['id']; ?>" class="btn-small" style="background: var(--secondary-color); border: none; padding: 0.4rem 0.8rem; border-radius: 0.5rem; color: white; cursor: pointer; font-size: 0.85rem; text-decoration: none;"><i class="fa-solid fa-pen" style="margin-right: 0.4rem;"></i> Edit</a>
+                                    <?php endif; ?>
+                                    <a href="<?= BASEURL; ?>/student/delete_mentor_comment/<?= $c['id']; ?>/<?= $data['mentor']['user_id']; ?>/<?= $data['skill_id']; ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus komentar ini?');" class="btn-small btn-danger" style="padding: 0.4rem 0.8rem; border-radius: 0.5rem; font-size: 0.85rem; text-decoration: none;"><i class="fa-solid fa-trash" style="margin-right: 0.4rem;"></i> Hapus</a>
+                                </div>
+                            <?php endif; ?>
                         </div>
-                        <p style="margin: 0; font-size: 1.1rem; line-height: 1.6;"><?= nl2br(htmlspecialchars($c['comment'])); ?></p>
+                        
+                        <?php if (isset($_GET['edit_comment_id']) && $_GET['edit_comment_id'] == $c['id'] && $c['student_user_id'] == $_SESSION['user']['id']): ?>
+                            <div style="margin-top: 1rem;">
+                                <form action="<?= BASEURL; ?>/student/update_mentor_comment" method="post">
+                                    <input type="hidden" name="comment_id" value="<?= $c['id']; ?>">
+                                    <input type="hidden" name="mentor_id" value="<?= htmlspecialchars($data['mentor']['user_id']); ?>">
+                                    <input type="hidden" name="skill_id" value="<?= htmlspecialchars($data['skill_id']); ?>">
+                                    <textarea name="comment" rows="3" style="width: 100%; padding: 1rem; border-radius: 0.75rem; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); color: white; font-family: inherit; font-size: 1rem; outline: none; resize: vertical;" required><?= htmlspecialchars($c['comment']); ?></textarea>
+                                    <div style="text-align: right; margin-top: 0.5rem; display: flex; justify-content: flex-end; gap: 0.5rem;">
+                                        <a href="<?= BASEURL; ?>/student/mentor_comments/<?= $data['mentor']['user_id']; ?>/<?= $data['skill_id']; ?>" class="btn-secondary" style="padding: 0.5rem 1rem; border-radius: 1rem; font-size: 0.9rem; cursor: pointer; text-decoration: none;">Batal</a>
+                                        <button type="submit" class="btn-primary" style="padding: 0.5rem 1rem; border-radius: 1rem; font-size: 0.9rem; cursor: pointer; border: none;">Simpan</button>
+                                    </div>
+                                </form>
+                            </div>
+                        <?php else: ?>
+                            <div>
+                                <p style="margin: 0; font-size: 1.1rem; line-height: 1.6;"><?= nl2br(htmlspecialchars($c['comment'])); ?></p>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>
