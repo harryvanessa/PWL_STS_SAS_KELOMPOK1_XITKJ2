@@ -74,4 +74,39 @@
                         </div>
         <?php endif; ?>
     </div>
+
+    <!-- Student Comments Section -->
+    <div class="glass-card" style="background: transparent; border: none; padding: 0; box-shadow: none; margin-top: 3rem;">
+        <h2 class="card-title" style="text-align: left; font-size: 1.5rem; margin-bottom: 1.5rem;"><i class="fa-regular fa-comments"></i> Ulasan Siswa</h2>
+        
+        <?php if(empty($data['comments'])): ?>
+            <div class="glass-card" style="text-align: center; padding: 3rem;">
+                <p class="text-muted">Belum ada komentar dari siswa.</p>
+            </div>
+        <?php else: ?>
+            <?php 
+            $total_comments = count($data['comments']);
+            $display_comments = array_slice($data['comments'], 0, 3);
+            ?>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+                <?php foreach($display_comments as $comment): ?>
+                    <div class="glass-card" style="padding: 1.5rem; display: flex; flex-direction: column;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <strong style="color: #60a5fa; font-size: 1.1rem;"><?= htmlspecialchars($comment['full_name']); ?></strong>
+                            <span style="font-size: 0.85rem; color: var(--text-muted);"><?= date('d M Y, H:i', strtotime($comment['created_at'])); ?></span>
+                        </div>
+                        <p style="margin: 0; font-size: 1rem; line-height: 1.5; flex-grow: 1;"><?= nl2br(htmlspecialchars($comment['comment'])); ?></p>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            
+            <?php if($total_comments > 3): ?>
+                <div style="text-align: center;">
+                    <a href="<?= BASEURL; ?>/mentor/comments" class="btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 2rem; border-radius: 2rem; text-decoration: none;">
+                        <i class="fa-solid fa-list"></i> Lihat Semua Ulasan (<?= $total_comments; ?>)
+                    </a>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
+    </div>
 </div>

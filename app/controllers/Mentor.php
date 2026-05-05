@@ -20,6 +20,7 @@ class Mentor extends Controller {
         }
 
         $data['requests'] = $this->model('Mentor_model')->getSessionRequests($uid);
+        $data['comments'] = $this->model('Mentor_model')->getMentorComments($uid);
         $this->render('mentor/index', $data);
     }
 
@@ -59,5 +60,15 @@ class Mentor extends Controller {
             ? Flasher::setFlash($title, $successMsg, 'success')
             : Flasher::setFlash($title, $failMsg, 'danger');
         $this->redirect('mentor');
+    }
+
+    public function comments()
+    {
+        $uid = $_SESSION['user']['id'];
+        $data = [
+            'judul' => 'Semua Ulasan Siswa',
+            'comments' => $this->model('Mentor_model')->getMentorComments($uid)
+        ];
+        $this->render('mentor/comments', $data);
     }
 }

@@ -49,4 +49,17 @@ class Mentor_model {
             ['meeting_link' => $meeting_link, 'session_id' => $session_id]
         )->rowCount();
     }
+
+    public function getMentorComments($mentor_user_id)
+    {
+        return $this->db->run(
+            "SELECT c.*, sp.full_name, u.username
+             FROM mentor_comments c
+             JOIN users u ON c.student_user_id = u.id
+             JOIN student_profiles sp ON u.id = sp.user_id
+             WHERE c.mentor_user_id = :mentor_user_id
+             ORDER BY c.created_at DESC",
+            ['mentor_user_id' => $mentor_user_id]
+        )->resultSet();
+    }
 }
