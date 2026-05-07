@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 05, 2026 at 05:35 AM
+-- Generation Time: May 07, 2026 at 05:52 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -11,8 +11,7 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-CREATE DATABASE pwl_db;
-USE pwl_db;
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -21,6 +20,27 @@ USE pwl_db;
 --
 -- Database: `pwl_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `major_selections`
+--
+
+CREATE TABLE `major_selections` (
+  `id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `major` varchar(100) NOT NULL,
+  `app` varchar(100) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `major_selections`
+--
+
+INSERT INTO `major_selections` (`id`, `user_id`, `major`, `app`, `created_at`) VALUES
+(1, 11, 'Design Grafis', 'Figma', '2026-05-05 06:16:57');
 
 -- --------------------------------------------------------
 
@@ -72,21 +92,8 @@ CREATE TABLE `mentor_profiles` (
 INSERT INTO `mentor_profiles` (`id`, `user_id`, `skill_id`, `full_name`, `email`, `phone`, `address`, `experience`, `status`, `feedback`) VALUES
 (1, 4, 1, 'budi.spd', 'mentor1@gmail.com', '082112331', NULL, '213', 'rejected', 'kamu bot'),
 (2, 5, 2, 'fkmjsdnkj', 'dasd@gmail.com', '08213123', NULL, '123123', 'rejected', 'ebot si'),
-(3, 6, 1, 'tes1', '123@123', '0812312321', NULL, 's', 'approved', NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `major_selections`
---
-
-CREATE TABLE `major_selections` (
-  `id` int NOT NULL,
-  `user_id` int NOT NULL,
-  `major` varchar(100) NOT NULL,
-  `app` varchar(100) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+(3, 6, 1, 'tes1', '123@123', '0812312321', NULL, 's', 'approved', NULL),
+(4, 12, 2, 'test', 'selvinagustino248@gmail.com', '085875790539', NULL, 'ckhdc h cf', 'approved', NULL);
 
 -- --------------------------------------------------------
 
@@ -208,7 +215,8 @@ INSERT INTO `student_profiles` (`id`, `user_id`, `full_name`, `email`, `phone`, 
 (3, 7, 'tes2', '123@123', '123321', '123123', 'Tertarik pada: creative dan intuitive'),
 (4, 8, 'tes3', '123@123', '1234', '1234', 'Tertarik pada: speaking dan logical'),
 (5, 9, 'tes4', '123@123', '123124', 'dlsfjilo', NULL),
-(6, 10, 'tes5', '123@123', '123321', 'peojw', 'Tertarik pada: creative dan logical');
+(6, 10, 'tes5', '123@123', '123321', 'peojw', 'Tertarik pada: creative dan logical'),
+(7, 11, 'teh', 'selvinagustino248@gmail.com', '085875790539', 'sbhsablhcd', NULL);
 
 -- --------------------------------------------------------
 
@@ -253,11 +261,20 @@ INSERT INTO `users` (`id`, `username`, `password`, `role`, `created_at`) VALUES
 (7, 'tes2', '$2y$10$6u0S./PPe7Pijp.etp89FOHOzgQjBjsindADGN9ZOJS.y5mqsaZTK', 'student', '2026-04-29 13:37:27'),
 (8, 'tes3', '$2y$10$QY7oyc2QBcnzvtvT2KYqlODSFKdrEzTtC5uEGBsUzGgRv2LC4GWOu', 'student', '2026-04-30 06:24:25'),
 (9, 'tes4', '$2y$10$DT092Lg5s0vy90at/0m4EubVhQk.aBpJVg0dQAyhIIF7lyk88IyuS', 'student', '2026-05-05 05:16:08'),
-(10, 'tes5', '$2y$10$JDgJZFdVbS.M2q.hIzAenOCbuj8S7KWJt.Uuv2p9LcGCEEtZ9s/ie', 'student', '2026-05-05 05:17:25');
+(10, 'tes5', '$2y$10$JDgJZFdVbS.M2q.hIzAenOCbuj8S7KWJt.Uuv2p9LcGCEEtZ9s/ie', 'student', '2026-05-05 05:17:25'),
+(11, 'teh', '$2y$10$OxOL0uNEMoGUzgicpPRn0OgDu4fM9LNDsa2S5LMFTFqMbwDcTCEMy', 'student', '2026-05-05 06:16:50'),
+(12, 'test', '$2y$10$l8PY4ujYqW9s7SiV6JECNeKspHfk.pvalm4doqQkQS/ek7.hxRsHK', 'mentor', '2026-05-05 16:36:19');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `major_selections`
+--
+ALTER TABLE `major_selections`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `mentor_comments`
@@ -274,13 +291,6 @@ ALTER TABLE `mentor_profiles`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `skill_id` (`skill_id`);
-
---
--- Indexes for table `major_selections`
---
-ALTER TABLE `major_selections`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `messages`
@@ -351,6 +361,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `major_selections`
+--
+ALTER TABLE `major_selections`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `mentor_comments`
 --
 ALTER TABLE `mentor_comments`
@@ -360,13 +376,7 @@ ALTER TABLE `mentor_comments`
 -- AUTO_INCREMENT for table `mentor_profiles`
 --
 ALTER TABLE `mentor_profiles`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `major_selections`
---
-ALTER TABLE `major_selections`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `messages`
@@ -402,7 +412,7 @@ ALTER TABLE `student_notes`
 -- AUTO_INCREMENT for table `student_profiles`
 --
 ALTER TABLE `student_profiles`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `student_skills`
@@ -414,11 +424,17 @@ ALTER TABLE `student_skills`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `major_selections`
+--
+ALTER TABLE `major_selections`
+  ADD CONSTRAINT `fk_major_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `mentor_comments`
@@ -433,12 +449,6 @@ ALTER TABLE `mentor_comments`
 ALTER TABLE `mentor_profiles`
   ADD CONSTRAINT `fk_mentor_skill` FOREIGN KEY (`skill_id`) REFERENCES `skills` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_mentor_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `major_selections`
---
-ALTER TABLE `major_selections`
-  ADD CONSTRAINT `fk_major_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `messages`
