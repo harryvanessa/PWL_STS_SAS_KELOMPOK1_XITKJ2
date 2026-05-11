@@ -17,30 +17,11 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
+CREATE DATABASE pwl_db;
+USE pwl_db;
 --
 -- Database: `pwl_db`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `major_selections`
---
-
-CREATE TABLE `major_selections` (
-  `id` int NOT NULL,
-  `user_id` int NOT NULL,
-  `major` varchar(100) NOT NULL,
-  `app` varchar(100) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `major_selections`
---
-
-INSERT INTO `major_selections` (`id`, `user_id`, `major`, `app`, `created_at`) VALUES
-(1, 11, 'Design Grafis', 'Figma', '2026-05-05 06:16:57');
 
 -- --------------------------------------------------------
 
@@ -160,6 +141,34 @@ INSERT INTO `skills` (`id`, `name`, `description`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `major_apps`
+--
+
+CREATE TABLE `major_apps` (
+  `id` int NOT NULL,
+  `major` varchar(100) NOT NULL,
+  `app_name` varchar(100) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `major_apps`
+--
+
+INSERT INTO `major_apps` (`id`, `major`, `app_name`, `created_at`) VALUES
+(1, 'Desain Grafis', 'Canva', '2026-05-12 00:00:00'),
+(2, 'Desain Grafis', 'Figma', '2026-05-12 00:00:00'),
+(3, 'Desain Grafis', 'Photoshop', '2026-05-12 00:00:00'),
+(4, 'Web Development', 'Chrome DevTools', '2026-05-12 00:00:00'),
+(5, 'Web Development', 'Git', '2026-05-12 00:00:00'),
+(6, 'Web Development', 'VS Code', '2026-05-12 00:00:00'),
+(7, 'Public Speaking', 'Canva', '2026-05-12 00:00:00'),
+(8, 'Public Speaking', 'PowerPoint', '2026-05-12 00:00:00'),
+(9, 'Public Speaking', 'Zoom', '2026-05-12 00:00:00');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `skill_exchanges`
 --
 
@@ -270,13 +279,6 @@ INSERT INTO `users` (`id`, `username`, `password`, `role`, `created_at`) VALUES
 --
 
 --
--- Indexes for table `major_selections`
---
-ALTER TABLE `major_selections`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`);
-
---
 -- Indexes for table `mentor_comments`
 --
 ALTER TABLE `mentor_comments`
@@ -316,6 +318,13 @@ ALTER TABLE `sessions`
 ALTER TABLE `skills`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Indexes for table `major_apps`
+--
+ALTER TABLE `major_apps`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `major` (`major`);
 
 --
 -- Indexes for table `skill_exchanges`
@@ -361,12 +370,6 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `major_selections`
---
-ALTER TABLE `major_selections`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
 -- AUTO_INCREMENT for table `mentor_comments`
 --
 ALTER TABLE `mentor_comments`
@@ -395,6 +398,12 @@ ALTER TABLE `sessions`
 --
 ALTER TABLE `skills`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `major_apps`
+--
+ALTER TABLE `major_apps`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `skill_exchanges`
@@ -429,12 +438,6 @@ ALTER TABLE `users`
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `major_selections`
---
-ALTER TABLE `major_selections`
-  ADD CONSTRAINT `fk_major_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `mentor_comments`

@@ -3,7 +3,10 @@
         
         <?php if($data['mentor']): ?>
             <h2 class="card-title" style="margin-bottom: 0.5rem;">🎉 Mentor Ditemukan!</h2>
-            <p class="text-muted" style="margin-bottom: 2rem;">Sistem telah mencocokkan Anda dengan spesialis <strong><?= htmlspecialchars($data['skill']['name']); ?></strong>.</p>
+            <p class="text-muted" style="margin-bottom: 0.5rem;">Sistem telah mencocokkan Anda dengan spesialis <strong><?= htmlspecialchars($data['skill']['name']); ?></strong>.</p>
+            <?php if (!empty($data['major'])): ?>
+                <p class="text-muted text-sm" style="margin-bottom: 2rem;">Jurusan: <strong><?= htmlspecialchars($data['major']); ?></strong><?php if (!empty($data['app'])): ?> | Aplikasi: <strong><?= htmlspecialchars($data['app']); ?></strong><?php endif; ?></p>
+            <?php endif; ?>
             
             <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 2rem; border-radius: 1rem; margin-bottom: 2rem;">
                 <div style="font-size: 4rem; color: var(--secondary-color); margin-bottom: 1rem;">

@@ -33,7 +33,16 @@ class Student extends Controller
         $interest = 'Tertarik pada: ' . $_POST['q1'] . ' dan ' . $_POST['q2'];
         $this->model('Student_model')->updateInterest($_SESSION['user']['id'], $interest);
 
-        $recommended = $_POST['q1'] === 'tech' ? 'Web Development' : 'Desain Grafis';
+        $recommended = '';
+        if ($_POST['q1'] === 'tech') {
+            $recommended = 'Web Development';
+        } elseif ($_POST['q1'] === 'creative') {
+            $recommended = 'Desain Grafis';
+        } elseif ($_POST['q1'] === 'speaking') {
+            $recommended = 'Public Speaking';
+        } else {
+            $recommended = 'Desain Grafis'; // fallback
+        }
         $this->redirect('student/select_skill?recommended=' . urlencode($recommended));
     }
 
@@ -44,10 +53,20 @@ class Student extends Controller
             return !in_array($skill['name'], ['Bahasa Inggris', 'Digital Marketing']);
         });
 
+        $major = $_GET['recommended'] ?? $_GET['major'] ?? null;
+        $selectedApp = $_GET['app'] ?? null;
+        $apps = [];
+        if ($major) {
+            $apps = $this->model('Skill_model')->getAppsByMajor($major);
+        }
+
         $this->render('student/select_skill', [
             'judul' => 'Pilih Keterampilan',
             'skills' => $filtered_skills,
             'recommended' => $_GET['recommended'] ?? null,
+            'major' => $major,
+            'apps' => $apps,
+            'selectedApp' => $selectedApp,
         ]);
     }
 
@@ -59,6 +78,8 @@ class Student extends Controller
 
         $skill_id = $_POST['skill_id'];
         $mentor_id = $_POST['mentor_id'] ?? null;
+        $major = $_POST['major'] ?? null;
+        $app = $_POST['app'] ?? null;
 
         // If returning from comments page, use the specific mentor. Otherwise, randomize.
         $mentor = $mentor_id
@@ -69,6 +90,8 @@ class Student extends Controller
             'judul' => 'Hasil Pencarian Mentor',
             'skill' => $this->model('Skill_model')->getSkillById($skill_id),
             'mentor' => $mentor,
+            'major' => $major,
+            'app' => $app,
         ]);
     }
 

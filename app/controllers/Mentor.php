@@ -72,13 +72,4 @@ class Mentor extends Controller {
         $this->render('mentor/comments', $data);
     }
 
-    public function major_selections()
-    {
-        $data = [
-            'judul' => 'Data Pilihan Jurusan Siswa',
-            'major_selections' => $this->model('Major_model')->getAllMajorSelections(),
-            'stats' => $this->model('Major_model')->getMajorSelectionStats(),
-        ];
-        $this->render('mentor/major_selections', $data);
-    }
 }

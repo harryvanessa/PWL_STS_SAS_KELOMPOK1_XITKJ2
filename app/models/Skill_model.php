@@ -17,4 +17,12 @@ class Skill_model {
     {
         return $this->db->run("SELECT * FROM skills WHERE id = :id", ['id' => $id])->single();
     }
+
+    public function getAppsByMajor($major)
+    {
+        return $this->db->run(
+            "SELECT app_name FROM major_apps WHERE major = :major ORDER BY app_name",
+            ['major' => $major]
+        )->resultSet();
+    }
 }
