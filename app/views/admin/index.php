@@ -2,18 +2,18 @@
     <div style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
         <div>
             <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">Dashboard Admin</h1>
-            <p class="text-muted">Kelola pendaftaran mentor dan daftar keterampilan.</p>
+            <p class="text-muted">Kelola pendaftaran mentor, komentar siswa, dan daftar keterampilan.</p>
         </div>
     </div>
 
     <?php Flasher::flash(); ?>
 
     <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
-        
+
         <!-- Section: Pending Mentors -->
         <div class="glass-card" style="max-width: 100%;">
             <h2 class="card-title" style="text-align: left; font-size: 1.5rem; margin-bottom: 1rem;">Menunggu Persetujuan Mentor</h2>
-            
+
             <?php if(empty($data['mentors'])): ?>
                 <p class="text-muted">Tidak ada mentor yang menunggu persetujuan saat ini.</p>
             <?php else: ?>
@@ -39,8 +39,8 @@
                                 </td>
                                 <td>
                                     <div style="display:flex; gap:0.5rem; flex-wrap: wrap;">
-                                        <a href="<?= BASEURL; ?>/admin/approve_mentor/<?= $mentor['id']; ?>" class="btn-small btn-success" onclick="return confirm('Setujui mentor ini?');">Approve</a>
-                                        
+                                        <a href="<?= BASEURL; ?>/admin/approve_mentor/<?= $mentor['id']; ?>" class="btn-small btn-success" onclick="return confirm('Setujui mentor ini? Akun mentor akan langsung aktif.');">Approve</a>
+
                                         <!-- Form Reject with Feedback -->
                                         <form action="<?= BASEURL; ?>/admin/reject_mentor" method="post" style="display:inline;" onsubmit="return confirm('Tolak mentor ini?');">
                                             <input type="hidden" name="csrf_token" value="<?= $data['csrf_token']; ?>">
@@ -58,6 +58,66 @@
                     </table>
                 </div>
             <?php endif; ?>
+        </div>
+
+        <!-- Section: Mentor Aktif -->
+        <div class="glass-card" style="max-width: 100%;">
+            <h2 class="card-title" style="text-align: left; font-size: 1.5rem; margin-bottom: 0.5rem;">Mentor Aktif</h2>
+            <p class="text-muted" style="margin-bottom: 1.5rem;">Klik <strong>Kelola Profil</strong> untuk mengubah jurusan, melihat &amp; mengedit komentar siswa, dan memberhentikan mentor.</p>
+
+            <?php if(empty($data['approved_mentors'])): ?>
+                <p class="text-muted">Tidak ada mentor aktif saat ini. Approve mentor terlebih dahulu.</p>
+            <?php else: ?>
+                <div class="table-container" style="margin-top: 0;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nama Lengkap</th>
+                                <th>Username</th>
+                                <th>Keahlian</th>
+                                <th>Pengalaman</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach($data['approved_mentors'] as $mentor): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($mentor['full_name']); ?></td>
+                                <td><?= htmlspecialchars($mentor['username']); ?></td>
+                                <td><span class="badge badge-success"><?= htmlspecialchars($mentor['skill_name']); ?></span></td>
+                                <td style="max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                    <?= htmlspecialchars($mentor['experience']); ?>
+                                </td>
+                                <td>
+                                    <div style="display:flex; gap:0.5rem; flex-wrap: wrap;">
+                                        <a href="<?= BASEURL; ?>/admin/mentor_profile/<?= $mentor['id']; ?>" class="btn-small btn-primary">Kelola Profil</a>
+                                        <a href="<?= BASEURL; ?>/admin/dismiss_mentor/<?= $mentor['id']; ?>" class="btn-small btn-danger" onclick="return confirm('Berhentikan mentor ini dari daftar aktif?');">Berhentikan</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php endif; ?>
+        </div>
+
+        <!-- Section: Daftar Siswa (Akses Cepat) -->
+        <div class="glass-card" style="max-width: 100%; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; padding: 2.5rem; gap: 1.5rem; background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);">
+            <div style="flex: 1; min-width: 250px;">
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+                    <div style="background: rgba(96, 165, 250, 0.2); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #60a5fa; font-size: 1.5rem;">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <h2 class="card-title" style="margin: 0; font-size: 1.6rem;">Data Siswa</h2>
+                </div>
+                <p class="text-muted" style="margin: 0; line-height: 1.5; padding-left: 4.2rem;">Akses halaman khusus untuk melihat seluruh data siswa, mengelola profil mereka, serta memantau dan mencarikan mentor.</p>
+            </div>
+            <div>
+                <a href="<?= BASEURL; ?>/admin/students_list" class="btn-primary" style="padding: 1rem 2rem; font-size: 1.1rem; border-radius: 2rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.75rem; box-shadow: 0 4px 15px rgba(96, 165, 250, 0.3);">
+                    Kelola Akun Siswa <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
         </div>
 
         <!-- Section: Skills Management -->
@@ -90,16 +150,16 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>No</th>
                             <th>Nama Keterampilan</th>
                             <th>Deskripsi</th>
                             <th width="100">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach($data['skills'] as $skill): ?>
+                        <?php foreach($data['skills'] as $i => $skill): ?>
                         <tr>
-                            <td><?= $skill['id']; ?></td>
+                            <td><?= $i + 1; ?></td>
                             <td style="font-weight: 500;"><?= htmlspecialchars($skill['name']); ?></td>
                             <td><?= htmlspecialchars($skill['description']); ?></td>
                             <td>
