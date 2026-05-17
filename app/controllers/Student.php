@@ -183,100 +183,64 @@ class Student extends Controller
         $this->redirect('chat/session/' . $session_id);
     }
 
-    // ─── Skill Exchange ────────────────────────────────────────────────────────
+    // ─── Profile Management ──────────────────────────────────────────────────────
 
-    public function skill_exchange()
+    public function profile()
     {
         $uid = $_SESSION['user']['id'];
-        $em = $this->model('Exchange_model');
-
-        $this->render('student/skill_exchange', [
-            'judul' => 'Pertukaran Keterampilan',
-            'skills' => $this->model('Skill_model')->getAllSkills(),
-            'listings' => $em->getAllStudentSkills($uid),
-            'my_skills' => $em->getMySkills($uid),
-            'incoming' => $em->getIncomingRequests($uid),
-            'outgoing' => $em->getOutgoingRequests($uid),
+        
+        $this->render('student/student_profile', [
+            'judul'   => 'Pengaturan Profil',
+            'user'    => $this->model('User_model')->getUserById($uid),
+            'profile' => $this->model('Student_model')->getStudentProfile($uid)
         ]);
     }
 
-    public function skill_detail($id)
+    public function update_profile()
     {
-        $skill = $this->model('Exchange_model')->getStudentSkillDetail($id);
-        if (!$skill)
-            return $this->redirect('student/skill_exchange');
-
-        $this->render('student/skill_detail', [
-            'judul' => 'Detail Keterampilan',
-            'skill' => $skill,
-        ]);
-    }
-
-    public function add_skill()
-    {
-        if (!$this->isPost())
-            return $this->redirect('student/skill_exchange');
-        $this->validateCsrf();
-
-        $ok = $this->model('Exchange_model')->addStudentSkill([
-            'student_id' => $_SESSION['user']['id'],
-            'skill_id' => $_POST['skill_id'],
-            'level' => $_POST['level'],
-            'description' => $_POST['description'],
-        ]);
-
-        $ok > 0
-            ? $this->flashRedirect('Keterampilan', 'Berhasil Ditambahkan!', 'success', 'student/skill_exchange')
-            : $this->flashRedirect('Keterampilan', 'Gagal Ditambahkan.', 'danger', 'student/skill_exchange');
-    }
-
-    public function delete_skill($id)
-    {
-        $ok = $this->model('Exchange_model')->deleteStudentSkill($id, $_SESSION['user']['id']);
-        $ok > 0
-            ? Flasher::setFlash('Keterampilan', 'Berhasil Dihapus', 'success')
-            : Flasher::setFlash('Keterampilan', 'Gagal Dihapus', 'danger');
-        $this->redirect('student/skill_exchange');
-    }
-
-    public function request_exchange()
-    {
-        if (!$this->isPost())
-            return $this->redirect('student/skill_exchange');
-        $this->validateCsrf();
-
-        $uid = $_SESSION['user']['id'];
-        $em = $this->model('Exchange_model');
-
-        // Prevent duplicate requests
-        if ($em->hasExistingRequest($uid, $_POST['student_skill_id'])) {
-            return $this->flashRedirect('Permintaan', 'Sudah ada permintaan yang sedang menunggu untuk skill ini.', 'danger', 'student/skill_detail/' . $_POST['student_skill_id']);
+        if (!$this->isPost()) {
+            return $this->redirect('student/profile');
         }
 
-        $ok = $em->requestExchange([
-            'requester_id' => $uid,
-            'provider_id' => $_POST['provider_id'],
-            'student_skill_id' => $_POST['student_skill_id'],
-            'message' => $_POST['message'] ?? '',
+        $uid = $_SESSION['user']['id'];
+
+        // Update Biodata
+        $this->model('Student_model')->updateProfile([
+            'user_id'   => $uid,
+            'full_name' => trim($_POST['full_name'] ?? ''),
+            'email'     => trim($_POST['email'] ?? ''),
+            'phone'     => trim($_POST['phone'] ?? ''),
+            'address'   => trim($_POST['address'] ?? '')
         ]);
 
-        $ok > 0
-            ? $this->flashRedirect('Permintaan Pertukaran', 'Berhasil Dikirim!', 'success', 'student/skill_exchange')
-            : $this->flashRedirect('Permintaan Pertukaran', 'Gagal Dikirim.', 'danger', 'student/skill_exchange');
-    }
+        // Update password if provided
+        $current_pw = $_POST['current_password'] ?? '';
+        $new_pw     = $_POST['new_password'] ?? '';
+        $confirm_pw = $_POST['confirm_password'] ?? '';
 
-    public function respond_exchange()
-    {
-        if (!$this->isPost())
-            return $this->redirect('student/skill_exchange');
-        $this->validateCsrf();
+        if (!empty($new_pw)) {
+            if (empty($current_pw)) {
+                Flasher::setFlash('Profil', 'Harap masukkan password saat ini untuk mengganti password', 'danger');
+                return $this->redirect('student/profile');
+            }
+            if ($new_pw !== $confirm_pw) {
+                Flasher::setFlash('Profil', 'Konfirmasi password baru tidak cocok', 'danger');
+                return $this->redirect('student/profile');
+            }
 
-        $status = $_POST['action'] === 'accept' ? 'accepted' : 'rejected';
-        $ok = $this->model('Exchange_model')->updateExchangeStatus($_POST['id'], $_SESSION['user']['id'], $status);
+            $user = $this->model('User_model')->getUserById($uid);
+            if (!password_verify($current_pw, $user['password'])) {
+                Flasher::setFlash('Profil', 'Password saat ini salah', 'danger');
+                return $this->redirect('student/profile');
+            }
 
-        $ok > 0
-            ? Flasher::setFlash('Permintaan', $status === 'accepted' ? 'Diterima!' : 'Ditolak.', 'success')
-            : Flasher::setFlash('Permintaan', 'Gagal diperbarui.', 'danger');
-        $this->redirect('student/skill_exchange');
+            $hashed = password_hash($new_pw, PASSWORD_DEFAULT);
+            $this->model('User_model')->updatePassword($uid, $hashed);
+            Flasher::setFlash('Profil', 'Biodata & Password Berhasil Diperbarui', 'success');
+            return $this->redirect('student/profile');
+        }
+
+        Flasher::setFlash('Profil', 'Berhasil Diperbarui', 'success');
+        $this->redirect('student/profile');
     }
 }

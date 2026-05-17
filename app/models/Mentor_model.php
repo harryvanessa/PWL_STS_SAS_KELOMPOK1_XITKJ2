@@ -19,6 +19,22 @@ class Mentor_model {
         )->single();
     }
 
+    public function updateMentorProfile($data)
+    {
+        return $this->db->run(
+            "UPDATE mentor_profiles
+             SET full_name = :full_name, email = :email, phone = :phone, experience = :experience
+             WHERE user_id = :user_id",
+            [
+                'full_name'  => $data['full_name'],
+                'email'      => $data['email'],
+                'phone'      => $data['phone'],
+                'experience' => $data['experience'],
+                'user_id'    => $data['user_id'],
+            ]
+        )->rowCount();
+    }
+
     public function getSessionRequests($user_id)
     {
         return $this->db->run(

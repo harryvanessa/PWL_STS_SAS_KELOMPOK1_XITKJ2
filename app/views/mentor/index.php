@@ -1,7 +1,15 @@
 <div class="container">
-    <div style="margin-bottom: 2rem;">
-        <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">Dashboard Mentor</h1>
-        <p class="text-muted">Selamat datang, <?= htmlspecialchars($data['profile']['full_name']); ?>!</p>
+    <div style="margin-bottom: 2rem; display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+        <div>
+            <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">Dashboard Mentor</h1>
+            <p class="text-muted">Selamat datang, <?= htmlspecialchars($data['profile']['full_name']); ?>!</p>
+        </div>
+        <a href="<?= BASEURL ?>/mentor/profile"
+           style="display:inline-flex; align-items:center; gap:0.6rem; padding:0.6rem 1.25rem; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); border-radius:0.75rem; color:#34d399; text-decoration:none; font-size:0.9rem; font-weight:500; transition:0.2s;"
+           onmouseover="this.style.background='rgba(16,185,129,0.2)';this.style.color='#fff'"
+           onmouseout="this.style.background='rgba(16,185,129,0.1)';this.style.color='#34d399'">
+            <i class="fa-solid fa-user-gear"></i> Edit Profil
+        </a>
     </div>
 
     <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 1rem 1.5rem; border-radius: 1rem; margin-bottom: 2rem; display: inline-block;">
@@ -12,6 +20,7 @@
     </div>
 
     <?php Flasher::flash(); ?>
+
 
     <div class="glass-card" style="background: transparent; border: none; padding: 0; box-shadow: none;">
         <h2 class="card-title" style="text-align: left; font-size: 1.5rem; margin-bottom: 1.5rem;">Permintaan Sesi Bimbingan</h2>

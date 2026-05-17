@@ -16,6 +16,22 @@ class Student_model {
         )->single();
     }
 
+    public function updateProfile($data)
+    {
+        return $this->db->run(
+            "UPDATE student_profiles 
+             SET full_name = :full_name, email = :email, phone = :phone, address = :address 
+             WHERE user_id = :user_id",
+            [
+                'full_name' => $data['full_name'],
+                'email'     => $data['email'],
+                'phone'     => $data['phone'],
+                'address'   => $data['address'],
+                'user_id'   => $data['user_id']
+            ]
+        )->rowCount();
+    }
+
     public function updateInterest($user_id, $interest)
     {
         return $this->db->run(

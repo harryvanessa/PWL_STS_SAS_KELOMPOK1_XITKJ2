@@ -16,6 +16,22 @@ class User_model {
         )->single();
     }
 
+    public function getUserById($id)
+    {
+        return $this->db->run(
+            'SELECT * FROM users WHERE id = :id',
+            ['id' => $id]
+        )->single();
+    }
+
+    public function updatePassword($id, $hashedPassword)
+    {
+        return $this->db->run(
+            'UPDATE users SET password = :password WHERE id = :id',
+            ['password' => $hashedPassword, 'id' => $id]
+        )->rowCount();
+    }
+
     public function isUsernameTaken($username): bool
     {
         return $this->db->run(

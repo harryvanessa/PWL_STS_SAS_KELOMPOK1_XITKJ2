@@ -24,16 +24,16 @@
                 </div>
             <?php endif; ?>
 
-            <!-- Notes Link Card -->
+            <!-- Profile Link Card -->
             <div class="glass-card" style="flex: 1; min-width: min(100%, 320px); background: rgba(59, 130, 246, 0.08); border-color: #3b82f6; display: flex; flex-direction: column;">
                 <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
                     <div style="width: 2.5rem; height: 2.5rem; background: rgba(59, 130, 246, 0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; color: #3b82f6; font-size: 1.1rem;">
-                        <i class="fa-regular fa-folder-open"></i>
+                        <i class="fa-solid fa-user-gear"></i>
                     </div>
-                    <h3 style="font-size: 1.1rem; margin: 0;">Catatan Jurusan</h3>
+                    <h3 style="font-size: 1.1rem; margin: 0;">Pengaturan Profil</h3>
                 </div>
-                <p class="text-muted" style="margin-bottom: 1.5rem; flex: 1;">Kelola catatan belajar Anda berdasarkan jurusan. Simpan hingga 5 catatan penting per jurusan.</p>
-                <a href="<?= BASEURL; ?>/student/skill_exchange" class="btn-primary" style="display: inline-block; text-align: center; background: #3b82f6; border-color: #3b82f6;">Kelola Catatan</a>
+                <p class="text-muted" style="margin-bottom: 1.5rem; flex: 1;">Atur dan perbarui informasi pribadi, minat, serta biodata Anda di sini.</p>
+                <a href="<?= BASEURL; ?>/student/profile" class="btn-primary" style="display: inline-block; text-align: center; background: #3b82f6; border-color: #3b82f6;">Edit Profil</a>
             </div>
         </div>
 

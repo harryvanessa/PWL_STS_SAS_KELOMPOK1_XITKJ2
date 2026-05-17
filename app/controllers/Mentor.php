@@ -72,4 +72,59 @@ class Mentor extends Controller {
         $this->render('mentor/comments', $data);
     }
 
+    // ─── Profile Management ──────────────────────────────────────────────────────
+
+    public function profile()
+    {
+        $uid = $_SESSION['user']['id'];
+        $this->render('mentor/mentor_profile', [
+            'judul'   => 'Profil Mentor',
+            'user'    => $this->model('User_model')->getUserById($uid),
+            'profile' => $this->model('Mentor_model')->getMentorProfile($uid),
+        ]);
+    }
+
+    public function update_profile()
+    {
+        if (!$this->isPost()) {
+            return $this->redirect('mentor/profile');
+        }
+
+        $uid = $_SESSION['user']['id'];
+
+        $this->model('Mentor_model')->updateMentorProfile([
+            'user_id'    => $uid,
+            'full_name'  => trim($_POST['full_name']  ?? ''),
+            'email'      => trim($_POST['email']       ?? ''),
+            'phone'      => trim($_POST['phone']       ?? ''),
+            'experience' => trim($_POST['experience']  ?? ''),
+        ]);
+
+        $current_pw = $_POST['current_password'] ?? '';
+        $new_pw     = $_POST['new_password']     ?? '';
+        $confirm_pw = $_POST['confirm_password'] ?? '';
+
+        if (!empty($new_pw)) {
+            if (empty($current_pw)) {
+                Flasher::setFlash('Profil', 'Harap masukkan password saat ini untuk mengganti password', 'danger');
+                return $this->redirect('mentor/profile');
+            }
+            if ($new_pw !== $confirm_pw) {
+                Flasher::setFlash('Profil', 'Konfirmasi password baru tidak cocok', 'danger');
+                return $this->redirect('mentor/profile');
+            }
+            $user = $this->model('User_model')->getUserById($uid);
+            if (!password_verify($current_pw, $user['password'])) {
+                Flasher::setFlash('Profil', 'Password saat ini salah', 'danger');
+                return $this->redirect('mentor/profile');
+            }
+            $this->model('User_model')->updatePassword($uid, password_hash($new_pw, PASSWORD_DEFAULT));
+            Flasher::setFlash('Profil', 'Biodata & Password Berhasil Diperbarui', 'success');
+            return $this->redirect('mentor/profile');
+        }
+
+        Flasher::setFlash('Profil', 'Berhasil Diperbarui', 'success');
+        $this->redirect('mentor/profile');
+    }
+
 }
