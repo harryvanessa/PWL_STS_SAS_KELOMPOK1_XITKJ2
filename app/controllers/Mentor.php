@@ -15,7 +15,7 @@ class Mentor extends Controller {
         $profile = $this->model('Mentor_model')->getMentorProfile($uid);
         $data    = ['judul' => 'Dashboard Mentor', 'profile' => $profile];
 
-        if ($profile['status'] !== 'approved') {
+        if (!$profile || $profile['status'] !== 'approved') {
             return $this->render('mentor/pending_approval', $data);
         }
 
