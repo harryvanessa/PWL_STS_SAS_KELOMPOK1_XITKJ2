@@ -1,4 +1,4 @@
-# STUDIA
+# STUDIA V2
 
 **STUDIA** adalah aplikasi web inovatif berbasis **MVC Pattern (PHP Native)** yang dirancang khusus untuk memfasilitasi *Mentorship* dan *Pertukaran Keterampilan* antar siswa. Proyek ini dibangun dengan antarmuka **Zenith Design** (Premium UI/UX) menggunakan murni HTML & CSS Vanilla (tanpa framework CSS) untuk memastikan performa yang ringan dan kustomisasi penuh.
 
@@ -6,7 +6,7 @@
 
 **Dibangun oleh Collaborator KELOMPOK 1 TKJ 2:**
 - Charles Marselino (Full-Stack (UI/UX, Front-end, Back-end))
-- Harry Vannnesa(Back-end)
+- Harry Vannesa(Back-end)
 - Selvin Agustino (Front-end)
 - Fernandez Carrick(UI/UX)
 
@@ -28,17 +28,21 @@ Aplikasi ini dibagi menjadi tiga tingkatan pengguna utama:
 
 1. **Dashboard Siswa (Student)**
    - Mengikuti Kuesioner Minat & Bakat.
-   - Pendaftaran sesi bimbingan (Gacha Mentor berdasarkan keahlian).
-   - **Skill Exchange:** Menawarkan keterampilan sendiri, menjelajahi keterampilan siswa lain, dan melakukan *request pertukaran*.
+   - Pendaftaran sesi bimbingan (Pilih keahlian serta aplikasi yang ingin di dalami dan gacha mentor ).
+   - Comment mentor (Dapat memberi ulasan ke mentor beserta dapat melihat ulasan sebelumnya yang telah diberikan siswa lain).
+   - **Profile Edit:** Menawarkan perubahan pada nama, biodata, email, nomor handphone beserta password yang telah dibuat sebelumnya.
    - Chat langsung (Real-time DB polling) dengan mentor.
 
 2. **Dashboard Mentor**
    - Melihat dan menyetujui/menolak permintaan bimbingan dari siswa.
    - Fitur Live Chat dengan siswa yang dibimbing.
+   - **Profile Edit:** Menawarkan perubahan pada nama, biodata, email, nomor handphone beserta password yang telah dibuat sebelumnya.
+   
 
 3. **Dashboard Admin**
    - Panel persetujuan (Approve/Reject) untuk registrasi mentor baru.
    - Manajemen data global.
+   
 
 ---
 
@@ -86,12 +90,15 @@ Saat aplikasi pertama kali dijalankan dari database bawaan (`database.sql`), kam
 ### Mendaftar Sebagai Siswa
 1. Akses halaman utama, klik tombol **Daftar Siswa**.
 2. Isi formulir yang ada. User bisa langsung login.
-3. Di dashboard, siswa dapat mengikuti *Kuesioner* atau langsung masuk ke menu *Skill Exchange*.
+3. Di dashboard, siswa dapat mengikuti *Kuesioner* atau langsung masuk ke menu *Profile Edit*.
+4. Setelah mengisi kuesioner, siswa dapat memilih keahlian beserta menggacha mentor sesuai keahlian yang dipilih.
+5. Setelah mendapatkan mentor, siswa dapat menentukan waktu pengajaran dengan mentor serta dapat melihat ulasan dari siswa sebelumnya melalui comment mentor.
 
 ### Mendaftar Sebagai Mentor
 1. Akses form pendaftaran dan pilih role MENTOR.
 2. Akun tidak akan langsung aktif. Mentor akan mendapat status `pending`.
 3. Login sebagai Admin untuk mengubah status pendaftaran mentor menjadi `Aktif`.
+4. Setelah mendapat pengajuan dari siswa, mentor dapat menerima atau menolak siswa tersebut.
 
 ### Kustomisasi Konten Halaman Depan
 Teks hero, deskripsi, warna *brand*, dan icon di Home Page bersifat dinamis! Untuk mengubahnya secara mudah tanpa harus masuk ke banyak view, cukup edit file konfigurasi data terpusat:
