@@ -10,11 +10,13 @@
 
     <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
 
+
         <!-- Section: Pending Mentors -->
         <div class="glass-card" style="max-width: 100%;">
-            <h2 class="card-title" style="text-align: left; font-size: 1.5rem; margin-bottom: 1rem;">Menunggu Persetujuan Mentor</h2>
+            <h2 class="card-title" style="text-align: left; font-size: 1.5rem; margin-bottom: 1rem;">Menunggu
+                Persetujuan Mentor</h2>
 
-            <?php if(empty($data['mentors'])): ?>
+            <?php if (empty($data['mentors'])): ?>
                 <p class="text-muted">Tidak ada mentor yang menunggu persetujuan saat ini.</p>
             <?php else: ?>
                 <div class="table-container" style="margin-top: 0;">
@@ -39,8 +41,8 @@
                                 </td>
                                 <td>
                                     <div style="display:flex; gap:0.5rem; flex-wrap: wrap;">
-                                        <a href="<?= BASEURL; ?>/admin/approve_mentor/<?= $mentor['id']; ?>" class="btn-small btn-success" onclick="return confirm('Setujui mentor ini? Akun mentor akan langsung aktif.');">Approve</a>
-
+                                        <a href="<?= BASEURL; ?>/admin/approve_mentor/<?= $mentor['id']; ?>" class="btn-small btn-success" onclick="return confirm('Setujui mentor ini?');">Approve</a>
+                                        
                                         <!-- Form Reject with Feedback -->
                                         <form action="<?= BASEURL; ?>/admin/reject_mentor" method="post" style="display:inline;" onsubmit="return confirm('Tolak mentor ini?');">
                                             <input type="hidden" name="csrf_token" value="<?= $data['csrf_token']; ?>">
@@ -123,25 +125,32 @@
         <!-- Section: Skills Management -->
         <div class="glass-card" style="max-width: 100%;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <h2 class="card-title" style="text-align: left; font-size: 1.5rem; margin-bottom: 0;">Kelola Keterampilan (Skills)</h2>
-                <button onclick="document.getElementById('addSkillForm').style.display='block'" class="btn-small btn-success" style="padding: 0.6rem 1rem;">+ Tambah Skill</button>
+                <h2 class="card-title" style="text-align: left; font-size: 1.5rem; margin-bottom: 0;">Kelola
+                    Keterampilan (Skills)</h2>
+                <button onclick="document.getElementById('addSkillForm').style.display='block'"
+                    class="btn-small btn-success" style="padding: 0.6rem 1rem;">+ Tambah Skill</button>
             </div>
 
             <!-- Form Tambah Skill (Hidden by default) -->
-            <div id="addSkillForm" style="display:none; background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 1rem; margin-bottom: 1.5rem; border: 1px solid var(--glass-border);">
+            <div id="addSkillForm"
+                style="display:none; background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 1rem; margin-bottom: 1.5rem; border: 1px solid var(--glass-border);">
                 <form action="<?= BASEURL; ?>/admin/add_skill" method="post">
                     <input type="hidden" name="csrf_token" value="<?= $data['csrf_token']; ?>">
                     <div style="display:flex; gap:1rem; align-items:flex-end;">
                         <div class="form-group" style="flex:1; margin-bottom:0;">
                             <label for="name" class="form-label">Nama Keterampilan</label>
-                            <input type="text" name="name" class="form-control" placeholder="Contoh: Web Development" required>
+                            <input type="text" name="name" class="form-control" placeholder="Contoh: Web Development"
+                                required>
                         </div>
                         <div class="form-group" style="flex:2; margin-bottom:0;">
                             <label for="description" class="form-label">Deskripsi</label>
-                            <input type="text" name="description" class="form-control" placeholder="Penjelasan singkat tentang skill ini" required>
+                            <input type="text" name="description" class="form-control"
+                                placeholder="Penjelasan singkat tentang skill ini" required>
                         </div>
-                        <button type="submit" class="btn-primary" style="padding: 0.75rem 1.5rem;">Simpan</button>
-                        <button type="button" onclick="document.getElementById('addSkillForm').style.display='none'" class="btn-danger" style="padding: 0.75rem 1.5rem; border-radius: 9999px;">Batal</button>
+                        <button type="submit" class="btn-success"
+                            style="padding: 0.75rem 1.5rem; border-radius: 9999px;">Simpan</button>
+                        <button type="button" onclick="document.getElementById('addSkillForm').style.display='none'"
+                            class="btn-danger" style="padding: 0.75rem 1.5rem; border-radius: 9999px;">Batal</button>
                     </div>
                 </form>
             </div>
@@ -157,9 +166,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach($data['skills'] as $i => $skill): ?>
+                        <?php foreach($data['skills'] as $skill): ?>
                         <tr>
-                            <td><?= $i + 1; ?></td>
+                            <td><?= $skill['id']; ?></td>
                             <td style="font-weight: 500;"><?= htmlspecialchars($skill['name']); ?></td>
                             <td><?= htmlspecialchars($skill['description']); ?></td>
                             <td>

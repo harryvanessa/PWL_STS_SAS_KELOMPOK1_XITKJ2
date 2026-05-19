@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/harryvanessa/PWL_STS_SAS_KELOMPOK1_XITKJ2/issues"
   },
-  "homepage": "https://github.com/harryvanessa/PWL_STS_SAS_KELOMPOK1_XITKJ2#readme"
+  "homepage": "https://github.com/harryvanessa/PWL_STS_SAS_KELOMPOK1_XITKJ2#readme",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.2.4",
+    "tailwindcss": "^4.2.4"
+  }
 }
